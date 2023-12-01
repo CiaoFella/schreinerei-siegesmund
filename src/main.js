@@ -1,8 +1,6 @@
-import animateTitle from './features/animateTitle'
-import createBadge from './features/createBasge'
+import animateMenu from './features/animateMenu'
+import syncCmsList from './features/syncCmsList'
 import './styles/style.css'
 
-console.log('Welcome to Vite + JS + Webflow!')
-
-createBadge()
-animateTitle()
+syncCmsList()
+animateMenu()
