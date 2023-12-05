@@ -1,4 +1,4 @@
-import $ from 'jquery'
+let $ = window.$
 
 function syncCmsList() {
   // attribute value checker
