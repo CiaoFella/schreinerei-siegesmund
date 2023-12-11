@@ -1,5 +1,5 @@
-export let varBlack = 'black'
-export let varWhite = 'white'
+export let varBlack = '#1c1c1c'
+export let varWhite = '#f8f8f8'
 export let varTransparent = 'rgba(0, 0, 0, 0)'
 
 function isFurtherScrolledThanHero(currentScrollPosition) {

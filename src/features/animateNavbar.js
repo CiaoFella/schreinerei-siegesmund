@@ -4,73 +4,140 @@ import ScrollTrigger from 'gsap/src/ScrollTrigger'
 import { varBlack, varTransparent, varWhite } from './varbiables'
 gsap.registerPlugin(ScrollTrigger)
 
-const animateNavbar = () => {
-  const heroSection = document.querySelector('.section--hero')
-  const navbarWrap = document.querySelector('.navbar-wrap')
-  const navBarMenuIconPaths = navbarWrap.querySelectorAll('.menu-icon svg path')
-  const navBarLogo = navbarWrap.querySelector('.logo-svg')
-  const navBarMenuTrigger = navbarWrap.querySelectorAll(
-    '.menu-trigger.is--secondary'
-  )
-  const allNavBarButtons = navbarWrap.querySelectorAll('.button-icon')
-  const allNavBarButtonsUnderline = navbarWrap.querySelectorAll(
-    '.button-icon .button-underline'
-  )
-  const allNavbarItemsColor = [navBarLogo, allNavBarButtons, navBarMenuTrigger]
-  const allNavbarItemsFill = [navBarMenuIconPaths]
+const transparentNav = document.querySelectorAll('.is--transparent-nav')
+const backgroundNav = document.querySelectorAll('.is--background-nav')
+const navbarWrap = document.querySelector('.navbar-wrap')
+const currentNavbarHeight = navbarWrap.offsetHeight
+const navBarMenuIconPaths = navbarWrap.querySelectorAll('.menu-icon svg path')
+const navBarLogo = navbarWrap.querySelector('.logo-svg')
+const navBarMenuTrigger = navbarWrap.querySelectorAll(
+  '.menu-trigger.is--secondary'
+)
+const allNavBarButtons = navbarWrap.querySelectorAll('.button-icon')
+const allNavBarButtonsUnderline = navbarWrap.querySelectorAll(
+  '.button-icon .button-underline'
+)
+const allNavbarItemsColor = [navBarLogo, allNavBarButtons, navBarMenuTrigger]
+const allNavbarItemsFill = [navBarMenuIconPaths]
 
+const animateNavbar = () => {
+  backgroundNav.forEach((singleNav) => {
+    setScrollBackgroundNav(singleNav)
+  })
+  transparentNav.forEach((singleNav) => {
+    setScrollTransparentNav(singleNav)
+  })
+}
+
+function setScrollTransparentNav(singleNav) {
+  const transparentTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: singleNav,
+      start: `-${currentNavbarHeight}px top`,
+      end: `-${currentNavbarHeight}px top`,
+      toggleActions: 'reset play reset reset',
+    },
+    paused: true,
+  })
+  transparentNavAnimation(
+    transparentTl,
+    allNavbarItemsColor,
+    allNavbarItemsFill,
+    allNavBarButtonsUnderline,
+    navbarWrap
+  )
+}
+
+function setScrollBackgroundNav(singleNav) {
   const navbarTl = gsap.timeline({
     scrollTrigger: {
-      trigger: heroSection,
-      start: '92.5% top',
-      end: 'bottom top',
-      scrub: 1,
-      pinType: 'fixed',
+      trigger: singleNav,
+      start: `-${currentNavbarHeight}px top`,
+      end: `-${currentNavbarHeight}px top`,
+      toggleActions: 'reset play reset reset',
     },
+    paused: true,
   })
-  navbarTl.fromTo(
+  backgroundNavAnimation(
+    navbarTl,
     allNavbarItemsColor,
-    {
-      color: varWhite,
-    },
-    {
-      color: varBlack,
-      duration: 2,
-    }
-  )
-  navbarTl.fromTo(
     allNavbarItemsFill,
+    allNavBarButtonsUnderline,
+    navbarWrap
+  )
+}
+
+function transparentNavAnimation(
+  timeline,
+  allNavbarItemsColor,
+  allNavbarItemsFill,
+  allNavBarButtonsUnderline,
+  navbarWrap
+) {
+  timeline.to(allNavbarItemsColor, {
+    color: varWhite,
+  })
+  timeline.to(
+    allNavbarItemsFill,
+
     {
       fill: varWhite,
     },
-    {
-      fill: varBlack,
-      duration: 2,
-    },
     '<'
   )
-  navbarTl.fromTo(
+  timeline.to(
     allNavBarButtonsUnderline,
     {
       backgroundColor: varWhite,
     },
-    {
-      backgroundColor: varBlack,
-      duration: 2,
-    },
     '<'
   )
-  navbarTl.fromTo(
+  timeline.to(
     navbarWrap,
     {
       backgroundColor: varTransparent,
-    },
-    {
-      backgroundColor: varWhite,
-      duration: 2,
     },
     '<'
   )
 }
 
-export default animateNavbar
+function backgroundNavAnimation(
+  timeline,
+  allNavbarItemsColor,
+  allNavbarItemsFill,
+  allNavBarButtonsUnderline,
+  navbarWrap
+) {
+  timeline.to(allNavbarItemsColor, {
+    color: varBlack,
+  })
+  timeline.to(
+    allNavbarItemsFill,
+    {
+      fill: varBlack,
+    },
+    '<'
+  )
+  timeline.to(
+    allNavBarButtonsUnderline,
+    {
+      backgroundColor: varBlack,
+    },
+    '<'
+  )
+  timeline.to(
+    navbarWrap,
+    {
+      backgroundColor: varWhite,
+    },
+    '<'
+  )
+}
+
+export default {
+  animateNavbar,
+  setScrollBackgroundNav,
+  setScrollTransparentNav,
+  transparentNavAnimation,
+  backgroundNavAnimation,
+}
