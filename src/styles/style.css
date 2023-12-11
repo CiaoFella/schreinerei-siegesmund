@@ -1,0 +1,8 @@
+/* Animate Teasers */
+.strenghts-img-wrap .heading-style-h2, .button-icon {
+  opacity: 0;
+}
+
+.strenghts-img-wrap .heading-style-h2.is--animated, .button-icon.is--animated {
+  opacity: 1;
+}
