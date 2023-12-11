@@ -13,18 +13,18 @@ function animateMenu() {
 
   const navigationFlyout = document.querySelector('.navigation-flyout')
   const allFlyoutContentItems = navigationFlyout.querySelectorAll(
-    '.navigation-flyout_content-item'
+    '.navigation_content-item'
   )
   const allFlyoutContentLines =
     navigationFlyout.querySelectorAll('.background-line')
   const allFlyoutVerticalLines =
     navigationFlyout.querySelectorAll('.vertical-divider')
   const activeNavigationFlyoutImage = navigationFlyout.querySelector(
-    '.navigation-flyout_content-item-image-wrap-inner.is-active img'
+    '.navigation_content-item-image-wrap-inner.is-active img'
   )
   const flyoutBlur = document.querySelector('.navigation-blur')
   const allFlyoutNavigations = navigationFlyout.querySelectorAll(
-    '.navigation-flyout_content-item-inner'
+    '.navigation_content-item-inner'
   )
 
   // NAVBAR Items
