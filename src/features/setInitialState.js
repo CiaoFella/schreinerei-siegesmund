@@ -34,7 +34,6 @@ function setInitialState() {
     const initialTl = gsap.timeline()
     transparentNav.forEach((singleNav) => {
       if (!isElementOutViewport(singleNav)) {
-        console.log('is transparent')
         navbar.transparentNavAnimation(
           initialTl,
           allNavbarItemsColor,
@@ -43,7 +42,6 @@ function setInitialState() {
           navbarWrap
         )
       } else if (isElementOutViewport(singleNav)) {
-        console.log('is not transparent')
         navbar.backgroundNavAnimation(
           initialTl,
           allNavbarItemsColor,
