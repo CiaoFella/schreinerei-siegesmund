@@ -35,7 +35,7 @@ function setScrollTransparentNav(singleNav) {
       trigger: singleNav,
       start: `-${currentNavbarHeight}px top`,
       end: `-${currentNavbarHeight}px top`,
-      toggleActions: 'reset play reset reset',
+      scrub: 1,
     },
     paused: true,
   })
@@ -52,9 +52,9 @@ function setScrollBackgroundNav(singleNav) {
   const navbarTl = gsap.timeline({
     scrollTrigger: {
       trigger: singleNav,
-      start: `-${currentNavbarHeight}px top`,
-      end: `-${currentNavbarHeight}px top`,
-      toggleActions: 'reset play reset reset',
+      start: `top top`,
+      end: `top top`,
+      scrub: 1,
     },
     paused: true,
   })
