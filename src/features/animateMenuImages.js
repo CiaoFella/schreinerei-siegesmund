@@ -8,8 +8,6 @@ const animateMenuImages = () => {
   const activeNavigationFlyoutImage2 = document.querySelector(
     '.navigation_content-item-image-wrap-inner img'
   ).src
-  console.log(activeNavigationFlyoutImage)
-  console.log(activeNavigationFlyoutImage2)
 
   new hoverEffect({
     parent: navigationFlyoutWrap,

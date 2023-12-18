@@ -281,11 +281,9 @@ function animateMenu() {
           () => {
             const currentScrollPosition = window.scrollY
             if (!isFurtherScrolledThanHero(currentScrollPosition)) {
-              console.log('not further scrolled')
               adaptedColor = varWhite
               adaptedTransparent = varTransparent
             } else {
-              console.log('further scrolled')
               adaptedColor = varBlack
               adaptedTransparent = varWhite
             }
