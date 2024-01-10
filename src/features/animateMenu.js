@@ -114,17 +114,6 @@ function animateMenu() {
           '<'
         )
         menuTlOpen.fromTo(
-          '.main-wrapper',
-          {
-            scale: 1,
-          },
-          {
-            scale: 0.95,
-            duration: 0.25,
-          },
-          '<'
-        )
-        menuTlOpen.fromTo(
           navigationFlyout,
           {
             autoAlpha: 0,
@@ -264,14 +253,6 @@ function animateMenu() {
             ease: 'expo.inOut',
           },
           '<+0.5'
-        )
-        menuTlClose.to(
-          '.main-wrapper',
-          {
-            scale: 1,
-            duration: 0.25,
-          },
-          '>-0.5'
         )
         menuTlClose.to(navigationFlyout, {
           autoAlpha: 0,

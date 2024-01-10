@@ -70,12 +70,23 @@ export default function animateService() {
   $allServiceItems.each(function () {
     const triggerElement = $(this)
     const targetElement = $(this).find('.service-item-img-wrap canvas')
+    const serviceItemHeightTl = gsap.timeline()
     const serviceItemZoomTl = gsap.timeline({
       scrollTrigger: {
         trigger: triggerElement,
         start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1,
+        toggleActions: 'play none none none',
+        onEnter: () => {
+          serviceItemHeightTl.fromTo(
+            triggerElement,
+            { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' },
+            {
+              clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)',
+              duration: 1,
+              ease: 'power4.out',
+            }
+          )
+        },
       },
     })
     serviceItemZoomTl.fromTo(targetElement, { scale: 1 }, { scale: 1.2 })
@@ -112,11 +123,11 @@ export default function animateService() {
         trigger: triggerElement,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 3,
+        scrub: 5,
       },
     })
     serviceItemTl.to(targetElement, {
-      y: '-5%',
+      y: '-20%',
       duration: 1,
     })
   })
@@ -129,11 +140,11 @@ export default function animateService() {
         trigger: triggerElement,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 3,
+        scrub: 5,
       },
     })
     serviceItemTl.to(targetElement, {
-      y: '-10%',
+      y: '-40%',
       duration: 1,
     })
   })
@@ -146,11 +157,11 @@ export default function animateService() {
         trigger: triggerElement,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 3,
+        scrub: 5,
       },
     })
     serviceItemTl.to(targetElement, {
-      y: '-15%',
+      y: '-60%',
       duration: 1,
     })
   })

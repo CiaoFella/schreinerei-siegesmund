@@ -11,21 +11,37 @@ function animateLightSection() {
     const targetElementText = $(this).find('*')
     const targetWrappingSection = $(this).closest('div[class*=section--]')
     const targetAlterText = targetWrappingSection.find('.is--changing-text')
-
     const lightBgTl = gsap.timeline({
       scrollTrigger: {
         trigger: triggerElement,
         start: 'top 50%',
-        end: 'bottom bottom',
-        scrub: 1,
+        end: 'bottom top',
+        toggleActions: 'play none none none',
+        onEnter: () => {
+          lightBgTl.to(targetElementBg, {
+            backgroundColor: varWhite,
+          })
+          if (targetAlterText) {
+            lightBgTl.to(targetAlterText, { color: varBlack })
+          } else {
+            lightBgTl.to(targetElementText, { color: varBlack })
+          }
+        },
+        onEnterBack: () => {
+          lightBgTl.to(targetElementBg, {
+            backgroundColor: varWhite,
+          })
+          if (targetAlterText) {
+            lightBgTl.to(targetAlterText, { color: varBlack })
+          } else {
+            lightBgTl.to(targetElementText, { color: varBlack })
+          }
+        },
+      },
+      defaults: {
+        duration: 0.25,
       },
     })
-    lightBgTl.to(targetElementBg, { backgroundColor: varWhite, duration: 1 })
-    if (targetAlterText) {
-      lightBgTl.to(targetAlterText, { color: varBlack, duration: 1 })
-    } else {
-      lightBgTl.to(targetElementText, { color: varBlack, duration: 1 })
-    }
   })
 }
 
@@ -37,33 +53,37 @@ function animateDarkSection() {
     const targetElementText = $(this).find('*')
     const targetWrappingSection = $(this).closest('div[class*=section--]')
     const targetAlterText = targetWrappingSection.find('.is--changing-text')
-
     const darkBgTl = gsap.timeline({
       scrollTrigger: {
         trigger: triggerElement,
         start: 'top 50%',
-        end: 'bottom bottom',
-        scrub: 1,
+        end: 'bottom top',
+        toggleActions: 'play complete play none',
+        onEnter: () => {
+          darkBgTl.to(targetElementBg, {
+            backgroundColor: varBlack,
+          })
+          if (targetAlterText) {
+            darkBgTl.to(targetAlterText, { color: varWhite })
+          } else {
+            darkBgTl.to(targetElementText, { color: varWhite })
+          }
+        },
+        onEnterBack: () => {
+          darkBgTl.to(targetElementBg, {
+            backgroundColor: varBlack,
+          })
+          if (targetAlterText) {
+            darkBgTl.to(targetAlterText, { color: varWhite })
+          } else {
+            darkBgTl.to(targetElementText, { color: varWhite })
+          }
+        },
+      },
+      defaults: {
+        duration: 0.25,
       },
     })
-    darkBgTl.fromTo(
-      targetElementBg,
-      { backgroundColor: varWhite },
-      { backgroundColor: varBlack, duration: 1 }
-    )
-    if (targetAlterText) {
-      darkBgTl.fromTo(
-        targetAlterText,
-        { color: varBlack },
-        { color: varWhite, duration: 1 }
-      )
-    } else {
-      darkBgTl.fromTo(
-        targetElementText,
-        { color: varBlack },
-        { color: varWhite, duration: 1 }
-      )
-    }
   })
 }
 

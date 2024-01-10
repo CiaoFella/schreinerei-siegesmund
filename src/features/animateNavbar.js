@@ -5,6 +5,9 @@ import { varBlack, varTransparent, varWhite } from './varbiables'
 gsap.registerPlugin(ScrollTrigger)
 
 const transparentNav = document.querySelectorAll('.is--transparent-nav')
+const transparentDarkNav = document.querySelectorAll(
+  '.is--transparent-dark-nav'
+)
 const backgroundNav = document.querySelectorAll('.is--background-nav')
 const navbarWrap = document.querySelector('.navbar-wrap')
 const currentNavbarHeight = navbarWrap.offsetHeight
@@ -27,6 +30,9 @@ const animateNavbar = () => {
   transparentNav.forEach((singleNav) => {
     setScrollTransparentNav(singleNav)
   })
+  transparentDarkNav.forEach((singleNav) => {
+    setScrollTransparentDarkNav(singleNav)
+  })
 }
 
 function setScrollTransparentNav(singleNav) {
@@ -34,12 +40,35 @@ function setScrollTransparentNav(singleNav) {
     scrollTrigger: {
       trigger: singleNav,
       start: `-${currentNavbarHeight}px top`,
-      end: `-${currentNavbarHeight}px top`,
-      scrub: 1,
+      toggleActions: 'play complete play reset',
     },
     paused: true,
+    defaults: {
+      duration: 1,
+    },
   })
   transparentNavAnimation(
+    transparentTl,
+    allNavbarItemsColor,
+    allNavbarItemsFill,
+    allNavBarButtonsUnderline,
+    navbarWrap
+  )
+}
+
+function setScrollTransparentDarkNav(singleNav) {
+  const transparentTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: singleNav,
+      start: `-${currentNavbarHeight}px top`,
+      toggleActions: 'play complete play reset',
+    },
+    paused: true,
+    defaults: {
+      duration: 1,
+    },
+  })
+  transparentDarkNavAnimation(
     transparentTl,
     allNavbarItemsColor,
     allNavbarItemsFill,
@@ -52,11 +81,13 @@ function setScrollBackgroundNav(singleNav) {
   const navbarTl = gsap.timeline({
     scrollTrigger: {
       trigger: singleNav,
-      start: `top top`,
-      end: `top top`,
-      scrub: 1,
+      start: `-${currentNavbarHeight}px top`,
+      toggleActions: 'play complete play reset',
     },
     paused: true,
+    defaults: {
+      duration: 1,
+    },
   })
   backgroundNavAnimation(
     navbarTl,
@@ -89,6 +120,40 @@ function transparentNavAnimation(
     allNavBarButtonsUnderline,
     {
       backgroundColor: varWhite,
+    },
+    '<'
+  )
+  timeline.to(
+    navbarWrap,
+    {
+      backgroundColor: varTransparent,
+    },
+    '<'
+  )
+}
+
+function transparentDarkNavAnimation(
+  timeline,
+  allNavbarItemsColor,
+  allNavbarItemsFill,
+  allNavBarButtonsUnderline,
+  navbarWrap
+) {
+  timeline.to(allNavbarItemsColor, {
+    color: varBlack,
+  })
+  timeline.to(
+    allNavbarItemsFill,
+
+    {
+      fill: varBlack,
+    },
+    '<'
+  )
+  timeline.to(
+    allNavBarButtonsUnderline,
+    {
+      backgroundColor: varBlack,
     },
     '<'
   )

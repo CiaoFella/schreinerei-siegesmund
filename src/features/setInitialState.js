@@ -4,17 +4,6 @@ import navbar from './animateNavbar'
 
 function setInitialState() {
   const navbarWrap = document.querySelector('.navbar-wrap')
-  const heroSection = document.querySelector('.section--hero')
-
-  const calculateHeroHeight = () => {
-    const heroWrap = document.querySelector('.hero-wrap')
-    const currentNavbarHeight = navbarWrap.offsetHeight
-    const currentHeroHeight = heroSection.offsetHeight
-    const newHeroHeight = currentNavbarHeight + currentHeroHeight
-
-    heroWrap.style.height = `${newHeroHeight}px`
-    heroSection.style.transform = `translateY(-${currentNavbarHeight}px)`
-  }
 
   const navBarMenuIconPaths = navbarWrap.querySelectorAll('.menu-icon svg path')
   const navBarLogo = navbarWrap.querySelector('.logo-svg')
@@ -52,8 +41,6 @@ function setInitialState() {
       }
     })
   }
-
-  calculateHeroHeight()
   setInitialColors()
 }
 
