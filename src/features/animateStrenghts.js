@@ -22,13 +22,7 @@ function animateStrenghts() {
   )
   const $edgeColumns = $teaserWrap.find('.strenghts-column-inner.is-reversed')
 
-  const $nextSection = $teaserSection.find('.section--strenghts-after')
-  const $images = $nextSection.find('.strenght-after__item')
-  const $button = $nextSection.find('.button-icon')
-  const $animatedItems = [$images, $button]
-
   const firstSectionTl = gsap.timeline({})
-  const nextSectionTl = gsap.timeline({})
 
   const scrollTrigger1 = ScrollTrigger.create({
     animation: firstSectionTl,
@@ -36,15 +30,6 @@ function animateStrenghts() {
     start: 'top top',
     end: 'bottom top',
     scrub: 1,
-  })
-
-  const scrollTrigger2 = ScrollTrigger.create({
-    animation: nextSectionTl,
-    trigger: $nextSection,
-    // When the next section starts to animate
-    start: 'top top',
-    end: 'bottom top',
-    toggleActions: 'play none none reverse',
   })
 
   firstSectionTl.fromTo(
@@ -71,31 +56,8 @@ function animateStrenghts() {
     { scale: 1, delay: 0.2 },
     '<'
   )
-  firstSectionTl.fromTo(
-    $firstSection,
-    { opacity: 1 },
-    { opacity: 0, duration: 0.2 }
-  )
-  firstSectionTl.fromTo(
-    $firstSection,
-    { autoAlpha: 1 },
-    {
-      autoAlpha: 0,
-    },
-    '<'
-  )
 
-  nextSectionTl.fromTo(
-    $animatedItems,
-    { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' },
-    {
-      clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)',
-      duration: 0.5,
-      ease: CustomEase.create('custom', 'M0,0 C0.302,0.398 0,1 1,1 '),
-    }
-  )
-
-  return [scrollTrigger1, scrollTrigger2]
+  return [scrollTrigger1]
 }
 
 export default animateStrenghts
