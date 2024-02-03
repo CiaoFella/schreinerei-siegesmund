@@ -1,6 +1,11 @@
+@import url('detailPage.css');
+@import url('listPage.css');
+@import url('aboutPage.css');
+@import url('cursor.css');
+
 /* PAGE LOAD */
 
-/* .page-load-img-wrap {
+.page-load-img-wrap {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
 }
 
@@ -12,29 +17,17 @@
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
 } */
 
-/* .hero-inner {
+.hero-inner {
   visibility: hidden;
-} */
+}
+
+/* MENU IMAGE SYNC */
+
+.navigation_content-item-image-wrap-inner.is-active {
+  opacity: 1;
+}
 
 /* PAGE TRANSITION */
-
-.page-transition .page-preload-wrap * {
-  clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
-}
-
-.is-transitioning {
-  pointer-events: none;
-  cursor: progress;
-}
-
-.section-wrapper.fixed {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: auto;
-  z-index: 10;
-}
 
 html.animating, .animating body {
   overflow: hidden;
@@ -42,9 +35,9 @@ html.animating, .animating body {
 
 /* Service Section */
 
-.service-img {
+/* .service-img {
   display: none;
-}
+} */
 
 .service-headline-item {
   opacity: 0;
@@ -54,13 +47,23 @@ html.animating, .animating body {
   opacity: 1;
 }
 
-/* About Information Section */
-
-.information_img {
-  opacity: 0;
+/* Smooth scroll */
+html.lenis {
+  height: auto;
 }
 
-.information_img.is--active {
-  opacity: 1;
-  z-index: 1;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }

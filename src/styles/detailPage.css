@@ -1,0 +1,13 @@
+.hero-detail-inner > h1, .hero-detail-inner > a {
+  transform: translateY(15rem);
+}
+
+.product-grid-grid {
+  grid-template-areas:
+  "img-1 img-1 . . ."
+  "img-1 img-1 . . . "
+}
+
+.product-grid-grid .product-grid-item.is--big  {
+  grid-area: img-1;
+}
