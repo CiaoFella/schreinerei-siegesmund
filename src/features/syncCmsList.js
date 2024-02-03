@@ -1,5 +1,7 @@
 let $ = window.$
 
+import gsap from 'gsap'
+
 function syncCmsList() {
   // attribute value checker
   function attr(defaultVal, attrVal) {
@@ -11,14 +13,13 @@ function syncCmsList() {
     if (!isNaN(attrVal) && defaultValType === 'number') return +attrVal
     return defaultVal
   }
+
   // cms list sync component
   $("[tr-listsync-element='component']").each(function () {
     let componentEl = $(this),
       group = attr('default', componentEl.attr('tr-listsync-group')),
       cmsListEl = componentEl.find(`[tr-listsync-list='${group}']`),
       cmsItemEl = cmsListEl.find("[role='listitem']"),
-      prevButtonEl = componentEl.find(`[tr-listsync-button-prev='${group}']`),
-      nextButtonEl = componentEl.find(`[tr-listsync-button-next='${group}']`),
       onLoadSetting = attr(false, componentEl.attr('tr-listsync-onload')),
       activeIndexSetting = attr(0, componentEl.attr('tr-listsync-activeindex')),
       activeClassSetting = attr(
@@ -34,7 +35,9 @@ function syncCmsList() {
           .find("[role='listitem']")
           .eq(itemIndex)
           .addClass(activeClassSetting)
+        activeImage = $(this).find("[role='listitem']").eq(itemIndex)
       })
+      animateImageIn(activeImage)
     }
 
     if (onLoadSetting) addActive(cmsItemEl.eq(activeIndexSetting))
@@ -69,33 +72,16 @@ function syncCmsList() {
       }
     })
 
-    prevButtonEl.on('click', function () {
-      cmsListEl.each(function () {
-        let currentItemEl = $(this)
-            .find("[role='listitem']")
-            .filter('.' + activeClassSetting)
-            .removeClass(activeClassSetting),
-          prevItemEl = currentItemEl.prev()
+    let activeImage
 
-        if (prevItemEl.length === 0)
-          prevItemEl = $(this).find("[role='listitem']").last()
-        prevItemEl.addClass(activeClassSetting)
+    function animateImageIn(activeImage) {
+      const animateImageInTl = gsap.timeline()
+      animateImageInTl.from(activeImage, {
+        scale: 0.9,
+        duration: 1,
+        ease: 'expo.out',
       })
-    })
-
-    nextButtonEl.on('click', function () {
-      cmsListEl.each(function () {
-        let currentItemEl = $(this)
-            .find("[role='listitem']")
-            .filter('.' + activeClassSetting)
-            .removeClass(activeClassSetting),
-          nextItemEl = currentItemEl.next()
-
-        if (nextItemEl.length === 0)
-          nextItemEl = $(this).find("[role='listitem']").first()
-        nextItemEl.addClass(activeClassSetting)
-      })
-    })
+    }
   })
 }
 

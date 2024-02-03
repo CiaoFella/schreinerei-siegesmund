@@ -1,168 +1,92 @@
 let $ = window.$
 import gsap from 'gsap'
-import hoverEffect from 'hover-effect'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
-export default function animateService() {
+gsap.registerPlugin(ScrollTrigger)
+
+function animateService() {
+  const serviceItemHeightTl = gsap.timeline()
+  const serviceItemZoomTl = gsap.timeline()
+  const serviceItemTl = gsap.timeline()
   const $serviceTitle = $('.service-headline-item')
-  const allServiceItemsVertical = document.querySelectorAll(
-    '.service-item.is--vertical'
-  )
-  const allServiceItemsHorizontal = document.querySelectorAll(
-    '.service-item.is--horizontal'
-  )
-  const allServiceItemsSquare = document.querySelectorAll(
-    '.service-item.is--square'
-  )
+  const $serviceRow = $('.service-row')
   const $serviceItem3n1 = $('.service-item:nth-child(3n+1')
   const $serviceItem3n2 = $('.service-item:nth-child(3n+2')
   const $serviceItem3n3 = $('.service-item:nth-child(3n+3')
-  const $allServiceItems = $('.service-item')
   $serviceTitle.eq(0).addClass('is--active')
-  const $serviceRow = $('.service-row')
-  allServiceItemsVertical.forEach(function (item) {
-    const imgWrap = item.querySelector('.service-item-img-wrap')
-    const img = item.querySelector('.service-img').src
-    new hoverEffect({
-      parent: imgWrap,
-      intensity: 0.5,
-      speedIn: 0.5,
-      speedOut: 0.5,
-      image1: img,
-      image2: img,
-      easing: 'power1.inOut',
-      imagesRatio: 1500 / 1000,
-      displacementImage:
-        'https://uploads-ssl.webflow.com/6564c4456080e0bdcc61f7b1/657b2da455169d07e5a15a80_jean-wimmerlin-dcasj22jmCk-unsplash-1.webp',
-    })
-  })
-  allServiceItemsHorizontal.forEach(function (item) {
-    const imgWrap = item.querySelector('.service-item-img-wrap')
-    const img = item.querySelector('.service-img').src
-    new hoverEffect({
-      parent: imgWrap,
-      intensity: 0.5,
-      speedIn: 0.5,
-      speedOut: 0.5,
-      image1: img,
-      image2: img,
-      easing: 'power1.inOut',
-      imagesRatio: 1000 / 1500,
-      displacementImage:
-        'https://uploads-ssl.webflow.com/6564c4456080e0bdcc61f7b1/657b2da455169d07e5a15a80_jean-wimmerlin-dcasj22jmCk-unsplash-1.webp',
-    })
-  })
-  allServiceItemsSquare.forEach(function (item) {
-    const imgWrap = item.querySelector('.service-item-img-wrap')
-    const img = item.querySelector('.service-img').src
-    new hoverEffect({
-      parent: imgWrap,
-      intensity: 0.5,
-      speedIn: 0.5,
-      speedOut: 0.5,
-      image1: img,
-      image2: img,
-      easing: 'power1.inOut',
-      imagesRatio: 1000 / 1000,
-      displacementImage:
-        'https://uploads-ssl.webflow.com/6564c4456080e0bdcc61f7b1/657b2da455169d07e5a15a80_jean-wimmerlin-dcasj22jmCk-unsplash-1.webp',
-    })
-  })
-  $allServiceItems.each(function () {
-    const triggerElement = $(this)
-    const targetElement = $(this).find('.service-item-img-wrap canvas')
-    const serviceItemHeightTl = gsap.timeline()
-    const serviceItemZoomTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: triggerElement,
-        start: 'top bottom',
-        toggleActions: 'play none none none',
-        onEnter: () => {
-          serviceItemHeightTl.fromTo(
-            triggerElement,
-            { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' },
-            {
-              clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)',
-              duration: 1,
-              ease: 'power4.out',
-            }
-          )
-        },
-      },
-    })
-    serviceItemZoomTl.fromTo(targetElement, { scale: 1 }, { scale: 1.2 })
-  })
+
   $serviceRow.each(function () {
     let triggerElement = $(this)
     let myIndex = $(this).index()
     let targetElement = $serviceTitle.eq(myIndex)
-    const serviceTl = () =>
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerElement,
-          start: 'top 50%',
-          end: 'bottom bottom',
-          scrub: 1,
-          onEnter: () => {
-            $serviceTitle.removeClass('is--active')
-            targetElement.addClass('is--active')
-          },
-          onEnterBack: () => {
-            $serviceTitle.removeClass('is--active')
-            targetElement.addClass('is--active')
-          },
-        },
-      })
-    serviceTl()
+
+    ScrollTrigger.create({
+      trigger: triggerElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      toggleActions: 'play complete play none',
+      onEnter: () => {
+        $serviceTitle.removeClass('is--active')
+        targetElement.addClass('is--active')
+      },
+      onEnterBack: () => {
+        $serviceTitle.removeClass('is--active')
+        targetElement.addClass('is--active')
+      },
+    })
   })
+
   $serviceItem3n1.each(function () {
+    const serviceItemTl = gsap.timeline()
     let triggerElement = $(this)
     let targetElement = $(this)
 
-    let serviceItemTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: triggerElement,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 5,
-      },
-    })
     serviceItemTl.to(targetElement, {
       y: '-20%',
-      duration: 1,
+    })
+
+    ScrollTrigger.create({
+      animation: serviceItemTl,
+      trigger: triggerElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 5,
     })
   })
   $serviceItem3n2.each(function () {
+    const serviceItemTl = gsap.timeline()
     let triggerElement = $(this)
     let targetElement = $(this)
 
-    let serviceItemTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: triggerElement,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 5,
-      },
+    ScrollTrigger.create({
+      animation: serviceItemTl,
+      trigger: triggerElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 5,
     })
     serviceItemTl.to(targetElement, {
       y: '-40%',
-      duration: 1,
     })
   })
   $serviceItem3n3.each(function () {
+    const serviceItemTl = gsap.timeline()
     let triggerElement = $(this)
     let targetElement = $(this)
 
-    let serviceItemTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: triggerElement,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 5,
-      },
+    ScrollTrigger.create({
+      animation: serviceItemTl,
+      trigger: triggerElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 5,
     })
     serviceItemTl.to(targetElement, {
       y: '-60%',
-      duration: 1,
     })
   })
+
+  return [serviceItemHeightTl, serviceItemZoomTl, serviceItemTl]
 }
+
+export default animateService

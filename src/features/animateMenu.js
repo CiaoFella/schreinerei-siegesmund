@@ -1,16 +1,14 @@
+let $ = window.$
+
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/src/ScrollTrigger'
 
-import isFurtherScrolledThanHero, {
-  varBlack,
-  varWhite,
-  varTransparent,
-} from './varbiables'
+import { varBlack, varWhite, varTransparent } from './varbiables'
 gsap.registerPlugin(ScrollTrigger)
 
 function animateMenu() {
   const menuTrigger = document.querySelector('.menu-trigger')
-
+  const navigationOuterWrap = document.querySelector('.navbar-content-wrap')
   const navigationFlyout = document.querySelector('.navigation-flyout')
   const allFlyoutContentItems = navigationFlyout.querySelectorAll(
     '.navigation_content-item'
@@ -50,6 +48,7 @@ function animateMenu() {
           onStart: () => {
             menuTrigger.style.pointerEvents = 'none'
             navigationFlyout.style.display = 'block'
+            $(menuTrigger).addClass('is--animating')
           },
           onComplete: () => {
             menuTrigger.style.pointerEvents = 'initial'
@@ -132,8 +131,8 @@ function animateMenu() {
           },
           {
             height: 'auto',
-            stagger: 0.1,
-            duration: 1,
+            stagger: 0.05,
+            duration: 0.75,
             ease: 'expo.inOut',
           },
           '<-0.25'
@@ -147,11 +146,11 @@ function animateMenu() {
           {
             y: 0,
             opacity: 1,
-            stagger: 0.05,
-            duration: 1,
-            ease: 'power4.out',
+            stagger: 0.1,
+            duration: 1.5,
+            ease: 'expo.out',
           },
-          '>'
+          '>-0.5'
         )
         menuTlOpen.fromTo(
           allFlyoutVerticalLines,
@@ -160,9 +159,9 @@ function animateMenu() {
           },
           {
             width: '100%',
-            duration: 1,
+            duration: 0.75,
           },
-          '<'
+          '<-0.25'
         )
         menuTlOpen.fromTo(
           allFlyoutContentLines,
@@ -172,8 +171,8 @@ function animateMenu() {
           {
             height: '100%',
             stagger: 0.1,
-            duration: 2,
-            ease: 'expo.out',
+            duration: 1.5,
+            ease: 'expo.inOut',
           },
           '<'
         )
@@ -184,12 +183,13 @@ function animateMenu() {
             scale: 1,
             duration: 2,
             ease: 'expo.out',
+            onComplete: () => {
+              $(menuTrigger).removeClass('is--animating')
+            },
           },
           '<-0.4'
         )
       } else {
-        let adaptedColor
-        let adaptedTransparent
         const menuTlClose = gsap.timeline({
           onStart: () => {
             menuTrigger.style.pointerEvents = 'none'
@@ -209,8 +209,8 @@ function animateMenu() {
           {
             height: '0',
             stagger: -0.1,
-            duration: 1,
-            ease: 'expo.out',
+            duration: 0.75,
+            ease: 'expo.inOut',
           },
           '<'
         )
@@ -219,7 +219,8 @@ function animateMenu() {
           {
             width: 0,
             stagger: -0.1,
-            duration: 1,
+            duration: 0.75,
+            ease: 'expo.inOut',
           },
           '<'
         )
@@ -229,8 +230,8 @@ function animateMenu() {
             y: '2.5rem',
             opacity: 0,
             stagger: 0.05,
-            duration: 0.5,
-            ease: 'power4.out',
+            duration: 0.25,
+            ease: 'expo.in',
           },
           '<'
         )
@@ -238,8 +239,7 @@ function animateMenu() {
           allFlyoutContentItems,
           {
             height: 0,
-            stagger: -0.1,
-            delay: 0.25,
+            stagger: -0.05,
             duration: 0.75,
             ease: 'expo.inOut',
           },
@@ -249,8 +249,8 @@ function animateMenu() {
           flyoutBlur,
           {
             height: 0,
-            duration: 1,
-            ease: 'expo.inOut',
+            duration: 0.75,
+            ease: 'expo.out',
           },
           '<+0.5'
         )
@@ -258,59 +258,41 @@ function animateMenu() {
           autoAlpha: 0,
           duration: 0,
         })
-        menuTlClose.call(
-          () => {
-            const currentScrollPosition = window.scrollY
-            if (!isFurtherScrolledThanHero(currentScrollPosition)) {
-              adaptedColor = varWhite
-              adaptedTransparent = varTransparent
-            } else {
-              adaptedColor = varBlack
-              adaptedTransparent = varWhite
-            }
-            menuTlClose.to(
-              allNavbarItemsColor,
-              {
-                color: adaptedColor,
-                duration: 0.3,
-                ease: 'expo.in',
-              },
-              '>'
-            )
-            menuTlClose.to(
-              allNavbarItemsFill,
-              {
-                fill: adaptedColor,
-                duration: 0.3,
-                ease: 'expo.in',
-              },
-              '<'
-            )
-            menuTlClose.to(
-              allNavBarButtonsUnderline,
-              {
-                backgroundColor: adaptedColor,
-                duration: 0.3,
-                ease: 'expo.in',
-              },
-              '<'
-            )
-            menuTlClose.to(
-              navbarWrap,
-              {
-                backgroundColor: adaptedTransparent,
-                duration: 0.3,
-                ease: 'expo.in',
-              },
-              '<'
-            )
-          },
-          null,
-          '<-0.5'
-        )
       }
     }
   })
+
+  $(document).keyup(function (e) {
+    if (
+      e.keyCode == 27 &&
+      !$(menuTrigger).hasClass('is--animating') &&
+      $(menuTrigger).hasClass('is-active')
+    ) {
+      closeMenu()
+    }
+    e.preventDefault()
+  })
+
+  document.addEventListener('click', function (e) {
+    if (
+      !navigationOuterWrap.contains(e.target) &&
+      !$(menuTrigger).hasClass('is--animating') &&
+      $(menuTrigger).hasClass('is-active')
+    ) {
+      closeMenu()
+    } else if (
+      navigationFlyout.contains(e.target) &&
+      $(e.target).closest('a').length &&
+      !$(menuTrigger).hasClass('is--animating') &&
+      $(menuTrigger).hasClass('is-active')
+    ) {
+      closeMenu()
+    }
+  })
+
+  function closeMenu() {
+    menuTrigger.click()
+  }
 }
 
 export default animateMenu

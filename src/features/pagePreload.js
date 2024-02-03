@@ -34,7 +34,7 @@ export default function pagePreload() {
   }
 
   function endLoaderAnimation() {
-    $(window).scrollTop(0)
+    // $(window).scrollTop(0)
     const hidePreloadTl = gsap.timeline({ onComplete: pageLoad })
     hidePreloadTl.to($allPreloadContent, {
       y: '-10rem',

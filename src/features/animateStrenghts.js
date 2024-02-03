@@ -27,9 +27,9 @@ function animateStrenghts() {
   const scrollTrigger1 = ScrollTrigger.create({
     animation: firstSectionTl,
     trigger: $firstSection,
-    start: 'top top',
-    end: 'bottom top',
-    scrub: 1,
+    start: 'top center',
+    end: 'bottom center',
+    scrub: 2,
   })
 
   firstSectionTl.fromTo(

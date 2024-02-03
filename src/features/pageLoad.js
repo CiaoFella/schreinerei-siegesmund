@@ -75,10 +75,10 @@ export default function pageLoad() {
       },
       '>-0.5'
     )
-    // animateHeroTl.to(
-    //   $('.hero-inner'),
-    //   { visibility: 'visible', duration: 0 },
-    //   0
-    // )
+    animateHeroTl.to(
+      $('.hero-inner'),
+      { visibility: 'visible', duration: 0 },
+      0
+    )
   }
 }
