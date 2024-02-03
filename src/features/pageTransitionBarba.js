@@ -278,6 +278,10 @@ function pageTransitionBarba() {
         once: () => {
           customCursor()
           initPage()
+          const allTriggers = ScrollTrigger.getAll()
+          allTriggers.forEach((item) => {
+            item.normalizeScroll(true)
+          })
         },
       },
     ],
