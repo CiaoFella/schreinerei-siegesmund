@@ -18,7 +18,7 @@ function animateTextScroll() {
     const $allTextLines = $(item).find('.is--text-line')
     const splitWords = new SplitType($allTextLines, { types: 'words' })
     headlineScrollTl.from(splitWords.words, {
-      y: '5rem',
+      y: '10rem',
       stagger: 0.05,
       duration: 1.25,
       ease: 'expo.out',
