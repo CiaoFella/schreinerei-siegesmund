@@ -21,13 +21,13 @@ function initListSwiper() {
   let horizontalSwiper
   horizontalSwiper = new Swiper('.swiper', {
     direction: 'horizontal',
-    slidesPerView: 1,
+    slidesPerView: 1.5,
     keyboard: true,
-    freeMode: true,
-    centeredSlides: true,
+    freeMode: false,
+    centeredSlides: false,
     mousewheel: {
-      releaseOnEdges: true,
       sensitivity: 2,
+      releaseOnEdges: false,
     },
     breakpoints: {
       480: {
@@ -35,6 +35,8 @@ function initListSwiper() {
       },
       768: {
         slidesPerView: 2.5,
+        freeMode: true,
+        centeredSlides: true,
       },
     },
     speed: 750,
@@ -62,6 +64,7 @@ function initTeaserSwiper() {
       768: {
         slidesPerView: 1.5,
         centeredSlides: false,
+        freeMode: true,
       },
     },
     speed: 750,
