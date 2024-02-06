@@ -12,6 +12,7 @@ import initAboutPage from '../pages/aboutPage'
 import initDetailPage from '../pages/detailPage'
 import initHomePage from '../pages/homePage'
 import initListPage from '../pages/listPage'
+import initOverviewPage from '../pages/overviewPage'
 import customCursor from './customCursor'
 import initSwiper from './initSwiper'
 
@@ -141,6 +142,8 @@ function pageTransitionBarba() {
         $('.active-flip-item').removeClass('active-flip-item')
       } else if (currentPage === 'about-page') {
         initAboutPage()
+      } else if (currentPage === 'overview-page') {
+        initOverviewPage()
       }
     } else {
       return
@@ -164,6 +167,12 @@ function pageTransitionBarba() {
         })
       } else if (currentPage === 'detail-page') {
         initDetailPage().forEach((anim) => {
+          anim.forEach((trigger) => {
+            trigger.kill()
+          })
+        })
+      } else if (currentPage === 'overview-page') {
+        initOverviewPage().forEach((anim) => {
           anim.forEach((trigger) => {
             trigger.kill()
           })
@@ -218,10 +227,22 @@ function pageTransitionBarba() {
       {
         name: 'main-transition',
         from: {
-          namespace: ['home-page', 'about-page', 'list-page', 'detail-page'],
+          namespace: [
+            'home-page',
+            'about-page',
+            'list-page',
+            'detail-page',
+            'overview-page',
+          ],
         },
         to: {
-          namespace: ['about-page', 'home-page', 'list-page', 'detail-page'],
+          namespace: [
+            'about-page',
+            'home-page',
+            'list-page',
+            'detail-page',
+            'overview-page',
+          ],
         },
         async leave(data) {
           await pageTransitionInAnimation()
