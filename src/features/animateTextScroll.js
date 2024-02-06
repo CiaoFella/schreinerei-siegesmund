@@ -27,11 +27,9 @@ function animateTextScroll() {
 
   $allTextScrolls.each(function (index, item) {
     const $allTextAccent = $(item).find('span.text-accent-italic')
-    textScrollTl.fromTo(
-      $allTextAccent,
-      { color: varGray },
-      { color: varBlack, stagger: 0.1 }
-    )
+    $allTextAccent.each((index, textItem) => {
+      textScrollTl.fromTo(textItem, { color: varGray }, { color: varBlack })
+    })
   })
 
   $allScrollHeadlines.each(function (index, item) {
@@ -48,9 +46,9 @@ function animateTextScroll() {
     ScrollTrigger.create({
       animation: textScrollTl,
       trigger: item,
-      start: '25% center',
-      end: '75% center',
-      scrub: true,
+      start: 'top center',
+      end: 'bottom bottom',
+      scrub: 0.5,
     })
   })
 
