@@ -17,9 +17,6 @@ function animateMenu() {
     navigationFlyout.querySelectorAll('.background-line')
   const allFlyoutVerticalLines =
     navigationFlyout.querySelectorAll('.vertical-divider')
-  const activeNavigationFlyoutImage = navigationFlyout.querySelector(
-    '.navigation_content-item-image-wrap-inner.is-active img'
-  )
   const flyoutBlur = document.querySelector('.navigation-blur')
   const allFlyoutNavigations = navigationFlyout.querySelectorAll(
     '.navigation_content-item-inner'
@@ -176,19 +173,6 @@ function animateMenu() {
           },
           '<'
         )
-        menuTlOpen.fromTo(
-          activeNavigationFlyoutImage,
-          { scale: 1.2 },
-          {
-            scale: 1,
-            duration: 2,
-            ease: 'expo.out',
-            onComplete: () => {
-              $(menuTrigger).removeClass('is--animating')
-            },
-          },
-          '<-0.4'
-        )
       } else {
         const menuTlClose = gsap.timeline({
           onStart: () => {
@@ -198,11 +182,6 @@ function animateMenu() {
             menuTrigger.style.pointerEvents = 'initial'
             navigationFlyout.style.display = 'none'
           },
-        })
-        menuTlClose.to(activeNavigationFlyoutImage, {
-          scale: 1.5,
-          duration: 0.75,
-          ease: 'expo.in',
         })
         menuTlClose.to(
           allFlyoutContentLines,
