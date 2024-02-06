@@ -6,6 +6,7 @@ import animateService from '../features/animateService'
 import animateStrenghts from '../features/animateStrenghts'
 import animateTextScroll from '../features/animateTextScroll'
 import contactPopup from '../features/contactPopup'
+import syncCmsList from '../features/syncCmsList'
 
 export default function initHomePage() {
   return [
@@ -17,5 +18,6 @@ export default function initHomePage() {
     animateService(),
     animateBgSections(),
     contactPopup(),
+    syncCmsList(),
   ]
 }
