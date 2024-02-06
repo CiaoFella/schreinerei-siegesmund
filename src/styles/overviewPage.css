@@ -1,0 +1,18 @@
+
+.overview-grid-item .dark-overlay {
+  transition: opacity 0.5s ease-in-out;
+}
+
+
+.overview-grid-item:hover .dark-overlay {
+  opacity: 0.5;
+}
+
+.overview-grid-item h3 {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.overview-grid-item:hover h3 {
+  opacity: 1;
+}
