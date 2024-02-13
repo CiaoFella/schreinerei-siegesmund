@@ -11,9 +11,9 @@ import syncCmsList from '../features/syncCmsList'
 
 export default function initAboutPage() {
   return [
+    animateNavbar(),
     animateAboutHero(),
     animateAboutInformation(),
-    animateNavbar(),
     animateTextScroll(),
     initSwiper.initTeaserSwiper(),
     swiperItemHover(),
