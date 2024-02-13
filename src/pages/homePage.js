@@ -6,13 +6,11 @@ import contactPopup from '../features/contactPopup'
 import animateHero from '../features/homePage/animateHero'
 import animateIntro from '../features/homePage/animateIntro'
 import animateStrenghts from '../features/homePage/animateStrenghts'
-import pagePreload from '../features/homePage/pagePreload'
 import syncCmsList from '../features/syncCmsList'
 
 export default function initHomePage() {
   return [
     animateNavbar(),
-    pagePreload(),
     animateHero(),
     animateIntro(),
     animateTextScroll(),
