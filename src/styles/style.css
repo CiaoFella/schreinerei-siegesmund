@@ -3,24 +3,7 @@
 @import url('aboutPage.css');
 @import url('cursor.css');
 @import url('overviewPage.css');
-
-/* PAGE LOAD */
-
-.page-load-img-wrap {
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-}
-
-.hero-background-img {
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-}
-
-.hero-background-poster-img {
-  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-} */
-
-.hero-inner {
-  visibility: hidden;
-}
+@import url('homePage.css');
 
 /* MENU IMAGE SYNC */
 
@@ -30,15 +13,11 @@
 
 /* PAGE TRANSITION */
 
-html.animating, .animating body {
+/* html.animating, .animating body {
   overflow: hidden;
-}
+} */
 
 /* Service Section */
-
-/* .service-img {
-  display: none;
-} */
 
 .service-headline-item {
   opacity: 0;
@@ -62,7 +41,7 @@ html.lenis {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .lenis.lenis-scrolling iframe {

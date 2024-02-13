@@ -1,0 +1,17 @@
+/* PAGE LOAD */
+
+.page-load-img-wrap {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+.hero-background-img {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+}
+
+.hero-background-poster-img {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+}
+
+.section--hero.is--main .hero-h1-wrap .heading-style-h1, .section--hero.is--main .button-icon  {
+  transform: translateY(10rem);
+}

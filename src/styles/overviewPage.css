@@ -3,7 +3,6 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-
 .overview-grid-item:hover .dark-overlay {
   opacity: 0.5;
 }
@@ -15,4 +14,12 @@
 
 .overview-grid-item:hover h3 {
   opacity: 1;
+}
+
+.section--overview-hero h1 .line, .section--overview-hero h1 .word {
+  transform: translateY(15rem);
+}
+
+.overview-grid-item {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
 }
