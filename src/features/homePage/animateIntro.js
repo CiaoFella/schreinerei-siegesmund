@@ -27,7 +27,7 @@ function animateIntro() {
 
   textScrollTl.fromTo(
     splitLines.lines,
-    { y: '150%' },
+    { y: '15rem' },
     {
       y: 0,
       duration: 1,

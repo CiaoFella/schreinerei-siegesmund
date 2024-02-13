@@ -2,6 +2,7 @@ let $ = window.$
 import gsap from 'gsap'
 import CustomEase from 'gsap/CustomEase'
 
+import { isDesktop, isTablet } from '../varbiables'
 import pageLoad from './pageLoad'
 
 gsap.registerPlugin(CustomEase)
@@ -33,9 +34,20 @@ export default function pagePreload() {
     $preloadNumber.text(progress + '%')
   }
 
+  let matchMedia = gsap.matchMedia()
+
   function endLoaderAnimation() {
-    // $(window).scrollTop(0)
-    const hidePreloadTl = gsap.timeline({ onComplete: pageLoad })
+    $(window).scrollTop(0)
+    const hidePreloadTl = gsap.timeline({
+      onComplete: () =>
+        matchMedia
+          .add(isDesktop, () => {
+            pageLoad.pageLoad()
+          })
+          .add(isTablet, () => {
+            pageLoad.mainHeroAnimation()
+          }),
+    })
     hidePreloadTl.to($allPreloadContent, {
       y: '-10rem',
       duration: 1,

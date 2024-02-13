@@ -12,6 +12,6 @@
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
 }
 
-.section--hero.is--main .hero-h1-wrap .heading-style-h1, .section--hero.is--main .button-icon  {
+.section--home-hero .hero-h1-wrap .heading-style-h1, .section--home-hero .button-icon  {
   transform: translateY(10rem);
 }

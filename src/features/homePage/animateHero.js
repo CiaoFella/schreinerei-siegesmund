@@ -6,7 +6,7 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function animateHero() {
-  const $heroSection = $('.section--hero:not(.is--text)')
+  const $heroSection = $('.section--home-hero')
   const heroTextTl = gsap.timeline({})
   const heroTl = gsap.timeline({})
   const $heroImageWrap = $heroSection.find('.hero-background-img')
@@ -45,7 +45,7 @@ function animateHero() {
   })
   heroTl.to(
     $heroBackgroundPosterImg,
-    { width: '11.5vw', height: '30rem', y: '-7.5rem' },
+    { width: '45rem', height: '30rem', y: '-7.5rem' },
     '<'
   )
 
