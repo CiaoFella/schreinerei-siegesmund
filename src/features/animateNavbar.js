@@ -8,10 +8,8 @@ gsap.registerPlugin(ScrollTrigger)
 
 const animateNavbar = () => {
   const $navbarWrap = $('.navbar-wrap')
-  const currentNavbarHeight = $navbarWrap.offsetHeight
-  const $transparentNav = $('.is--transparent-nav')
-  const $transparentDarkNav = $('.is--transparent-dark-nav')
-  const $backgroundNav = $('.is--background-nav')
+  const currentNavbarHeight = $navbarWrap.height()
+  const $allNavSections = $('[data-nav]')
   const $navBarMenuIconPaths = $navbarWrap.find('.menu-icon svg path')
   const $navBarLogo = $navbarWrap.find('.logo-svg')
   const $navBarMenuTrigger = $navbarWrap.find('.menu-trigger.is--secondary')
@@ -24,186 +22,71 @@ const animateNavbar = () => {
     $allNavBarButtons,
     $navBarMenuTrigger,
   ]
-  const $allNavbarItemsFill = [$navBarMenuIconPaths]
+  const $allNavbarItemsFill = $navBarMenuIconPaths
 
-  const navbarTl = gsap.timeline({
-    defaults: {
-      duration: 1,
-    },
-  })
-  const transparentTl = gsap.timeline({
-    defaults: {
-      duration: 1,
-    },
-  })
+  console.log($navBarMenuIconPaths)
 
-  function setScrollTransparentNav() {
-    transparentNavAnimation(
-      transparentTl,
-      $allNavbarItemsColor,
-      $allNavbarItemsFill,
-      $allNavBarButtonsUnderline,
-      $navbarWrap
-    )
-  }
+  let mainNavColor = varBlack
+  let secondaryNavColor = varTransparent
 
-  function setScrollTransparentDarkNav() {
-    transparentDarkNavAnimation(
-      transparentTl,
-      $allNavbarItemsColor,
-      $allNavbarItemsFill,
-      $allNavBarButtonsUnderline,
-      $navbarWrap
-    )
-  }
+  let navbarTl
 
-  function setScrollBackgroundNav() {
-    backgroundNavAnimation(
-      navbarTl,
-      $allNavbarItemsColor,
-      $allNavbarItemsFill,
-      $allNavBarButtonsUnderline,
-      $navbarWrap
-    )
-  }
+  $allNavSections.each((index, navSection) => {
+    navbarTl = gsap.timeline({})
 
-  function transparentNavAnimation(
-    timeline,
-    $allNavbarItemsColor,
-    $allNavbarItemsFill,
-    $allNavBarButtonsUnderline,
-    $navbarWrap
-  ) {
-    timeline.to($allNavbarItemsColor, {
-      color: varWhite,
-    })
-    timeline.to(
-      $allNavbarItemsFill,
+    const navSectionData = $(navSection).data('nav')
 
-      {
-        fill: varWhite,
-      },
-      '<'
-    )
-    timeline.to(
-      $allNavBarButtonsUnderline,
-      {
-        backgroundColor: varWhite,
-      },
-      '<'
-    )
-    timeline.to(
-      $navbarWrap,
-      {
-        backgroundColor: varTransparent,
-      },
-      '<'
-    )
-  }
-
-  function transparentDarkNavAnimation(
-    timeline,
-    $allNavbarItemsColor,
-    $allNavbarItemsFill,
-    $allNavBarButtonsUnderline,
-    $navbarWrap
-  ) {
-    timeline.to($allNavbarItemsColor, {
-      color: varBlack,
-    })
-    timeline.to(
-      $allNavbarItemsFill,
-
-      {
-        fill: varBlack,
-      },
-      '<'
-    )
-    timeline.to(
-      $allNavBarButtonsUnderline,
-      {
-        backgroundColor: varBlack,
-      },
-      '<'
-    )
-    timeline.to(
-      $navbarWrap,
-      {
-        backgroundColor: varTransparent,
-      },
-      '<'
-    )
-  }
-
-  function backgroundNavAnimation(
-    timeline,
-    $allNavbarItemsColor,
-    $allNavbarItemsFill,
-    $allNavBarButtonsUnderline,
-    $navbarWrap
-  ) {
-    timeline.to($allNavbarItemsColor, {
-      color: varBlack,
-    })
-    timeline.to(
-      $allNavbarItemsFill,
-      {
-        fill: varBlack,
-      },
-      '<'
-    )
-    timeline.to(
-      $allNavBarButtonsUnderline,
-      {
-        backgroundColor: varBlack,
-      },
-      '<'
-    )
-    timeline.to(
-      $navbarWrap,
-      {
-        backgroundColor: varWhite,
-      },
-      '<'
-    )
-  }
-
-  $backgroundNav.each((index, singleNav) => {
-    setScrollBackgroundNav(singleNav)
-  })
-  $transparentNav.each((index, singleNav) => {
-    setScrollTransparentNav(singleNav)
-  })
-  $transparentDarkNav.each((index, singleNav) => {
-    setScrollTransparentDarkNav(singleNav)
-  })
-
-  $transparentNav.each((index, singleNav) => {
+    if (navSectionData === 'transparent') {
+      mainNavColor = varWhite
+      secondaryNavColor = varTransparent
+    } else if (navSectionData === 'dark-transparent') {
+      mainNavColor = varBlack
+      secondaryNavColor = varTransparent
+    } else if (navSectionData === 'background') {
+      mainNavColor = varBlack
+      secondaryNavColor = varWhite
+    }
     ScrollTrigger.create({
-      animation: transparentTl,
-      trigger: singleNav,
-      start: `-${currentNavbarHeight}px top`,
-      toggleActions: 'play complete play reset',
-    })
-  })
-  $transparentDarkNav.each((index, singleNav) => {
-    ScrollTrigger.create({
-      animation: transparentTl,
-      trigger: singleNav,
-      start: `-${currentNavbarHeight}px top`,
-      toggleActions: 'play complete play reset',
-    })
-  })
-  $backgroundNav.each((index, singleNav) => {
-    ScrollTrigger.create({
+      trigger: navSection,
+      immediateRender: false,
       animation: navbarTl,
-      trigger: singleNav,
-      start: `-${currentNavbarHeight}px top`,
-      toggleActions: 'play complete play reset',
+      start: `top ${currentNavbarHeight}px`,
+      end: `bottom ${currentNavbarHeight}px`,
+      toggleActions: 'restart none none reverse',
+      onEnter: () => {
+        console.log(navSectionData)
+        $navbarWrap.data('nav', navSectionData)
+        $navbarWrap[0].setAttribute('data-nav', navSectionData)
+      },
     })
+
+    navbarTl.to($allNavbarItemsColor, {
+      color: mainNavColor,
+    })
+    navbarTl.to(
+      $allNavbarItemsFill,
+      {
+        fill: mainNavColor,
+      },
+      '<'
+    )
+    navbarTl.to(
+      $allNavBarButtonsUnderline,
+      {
+        backgroundColor: mainNavColor,
+      },
+      '<'
+    )
+    navbarTl.to(
+      $navbarWrap,
+      {
+        backgroundColor: secondaryNavColor,
+      },
+      '<'
+    )
   })
 
-  return [transparentTl, navbarTl]
+  return [navbarTl]
 }
 
 export default animateNavbar

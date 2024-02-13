@@ -29,68 +29,68 @@ function animateService() {
     })
   })
 
-  gsap.matchMedia({
-    '(min-width: 478px)': () => {
-      const serviceItemHeightTl = gsap.timeline()
-      const serviceItemZoomTl = gsap.timeline()
+  let matchMedia = gsap.matchMedia()
+
+  matchMedia.add('(min-width: 478px)', () => {
+    const serviceItemHeightTl = gsap.timeline()
+    const serviceItemZoomTl = gsap.timeline()
+    const serviceItemTl = gsap.timeline()
+    const $serviceItem3n1 = $('.service-item:nth-child(3n+1')
+    const $serviceItem3n2 = $('.service-item:nth-child(3n+2')
+    const $serviceItem3n3 = $('.service-item:nth-child(3n+3')
+    $serviceTitle.eq(0).addClass('is--active')
+
+    $serviceItem3n1.each(function () {
       const serviceItemTl = gsap.timeline()
-      const $serviceItem3n1 = $('.service-item:nth-child(3n+1')
-      const $serviceItem3n2 = $('.service-item:nth-child(3n+2')
-      const $serviceItem3n3 = $('.service-item:nth-child(3n+3')
-      $serviceTitle.eq(0).addClass('is--active')
+      let triggerElement = $(this)
+      let targetElement = $(this)
 
-      $serviceItem3n1.each(function () {
-        const serviceItemTl = gsap.timeline()
-        let triggerElement = $(this)
-        let targetElement = $(this)
-
-        serviceItemTl.to(targetElement, {
-          y: '-20%',
-        })
-
-        ScrollTrigger.create({
-          animation: serviceItemTl,
-          trigger: triggerElement,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 5,
-        })
-      })
-      $serviceItem3n2.each(function () {
-        const serviceItemTl = gsap.timeline()
-        let triggerElement = $(this)
-        let targetElement = $(this)
-
-        ScrollTrigger.create({
-          animation: serviceItemTl,
-          trigger: triggerElement,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 5,
-        })
-        serviceItemTl.to(targetElement, {
-          y: '-40%',
-        })
-      })
-      $serviceItem3n3.each(function () {
-        const serviceItemTl = gsap.timeline()
-        let triggerElement = $(this)
-        let targetElement = $(this)
-
-        ScrollTrigger.create({
-          animation: serviceItemTl,
-          trigger: triggerElement,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 5,
-        })
-        serviceItemTl.to(targetElement, {
-          y: '-60%',
-        })
+      serviceItemTl.to(targetElement, {
+        y: '-20%',
       })
 
-      return [serviceItemHeightTl, serviceItemZoomTl, serviceItemTl]
-    },
+      ScrollTrigger.create({
+        animation: serviceItemTl,
+        trigger: triggerElement,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 5,
+      })
+    })
+    $serviceItem3n2.each(function () {
+      const serviceItemTl = gsap.timeline()
+      let triggerElement = $(this)
+      let targetElement = $(this)
+
+      ScrollTrigger.create({
+        animation: serviceItemTl,
+        trigger: triggerElement,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 5,
+      })
+      serviceItemTl.to(targetElement, {
+        y: '-40%',
+      })
+    })
+    $serviceItem3n3.each(function () {
+      const serviceItemTl = gsap.timeline()
+      let triggerElement = $(this)
+      let targetElement = $(this)
+
+      ScrollTrigger.create({
+        animation: serviceItemTl,
+        trigger: triggerElement,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 5,
+      })
+      serviceItemTl.to(targetElement, {
+        y: '-60%',
+      })
+    })
+
+    return [serviceItemHeightTl, serviceItemZoomTl, serviceItemTl]
   })
 }
 

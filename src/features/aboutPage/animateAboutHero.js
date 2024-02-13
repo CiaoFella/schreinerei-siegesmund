@@ -1,18 +1,25 @@
 let $ = window.$
 import gsap from 'gsap'
+import SplitType from 'split-type'
 
 export default function animateAboutHero() {
   const aboutHeroTl = gsap.timeline({ defaults: { delay: 0.75 } })
   const $aboutPage = $('[data-barba-namespace=about-page]')
-  const $heroDetailInner = $aboutPage.find('.about-hero-wrap .about-hero-line')
-  const $heroText = $heroDetailInner.children()
+  const $heroDetailInner = $aboutPage.find('.about-hero-wrap')
+  const $heroDetailInnerLine = $aboutPage.find(
+    '.about-hero-wrap .about-hero-line'
+  )
+  const heroDetailSplit = new SplitType($heroDetailInner, {
+    types: 'words',
+  })
   const $heroImages = $heroDetailInner.find('.about-hero-img-wrap')
+  gsap.set($heroDetailInnerLine, { display: 'flex' })
   return (
-    aboutHeroTl.from($heroText, {
-      y: '150%',
+    aboutHeroTl.to([heroDetailSplit.words], {
+      y: '0rem',
       stagger: 0.1,
-      duration: 1.5,
       ease: 'expo.out',
+      duration: 1.5,
     }),
     aboutHeroTl.to(
       $heroImages,

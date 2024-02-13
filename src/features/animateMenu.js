@@ -36,6 +36,9 @@ function animateMenu() {
   const allNavbarItemsColor = [navBarLogo, allNavBarButtons, navBarMenuTrigger]
   const allNavbarItemsFill = [navBarMenuIconPaths]
 
+  let mainNavColor
+  let secondaryNavColor
+
   menuTrigger.addEventListener('click', () => {
     menuTrigger.classList.toggle('is-active')
     if (allFlyoutContentItems) {
@@ -49,6 +52,7 @@ function animateMenu() {
           },
           onComplete: () => {
             menuTrigger.style.pointerEvents = 'initial'
+            $(menuTrigger).removeClass('is--animating')
           },
         })
         menuTlOpen.fromTo(
@@ -174,6 +178,19 @@ function animateMenu() {
           '<'
         )
       } else {
+        const currentNavbarData = $(navbarWrap).data('nav')
+        if (currentNavbarData === 'transparent') {
+          mainNavColor = varWhite
+          secondaryNavColor = varTransparent
+        } else if (currentNavbarData === 'dark-transparent') {
+          mainNavColor = varBlack
+          secondaryNavColor = varTransparent
+        } else if (currentNavbarData === 'background') {
+          mainNavColor = varBlack
+          secondaryNavColor = varWhite
+        }
+        console.log(currentNavbarData)
+        console.log(currentNavbarData)
         const menuTlClose = gsap.timeline({
           onStart: () => {
             menuTrigger.style.pointerEvents = 'none'
@@ -237,6 +254,43 @@ function animateMenu() {
           autoAlpha: 0,
           duration: 0,
         })
+        menuTlClose
+          .to(
+            allNavbarItemsColor,
+            {
+              color: mainNavColor,
+              duration: 0.5,
+              ease: 'expo.out',
+            },
+            '<-0.15'
+          )
+          .to(
+            allNavbarItemsFill,
+            {
+              fill: mainNavColor,
+              duration: 0.5,
+              ease: 'expo.out',
+            },
+            '<'
+          )
+          .to(
+            allNavBarButtonsUnderline,
+            {
+              backgroundColor: mainNavColor,
+              duration: 0.5,
+              ease: 'expo.out',
+            },
+            '<'
+          )
+          .to(
+            navbarWrap,
+            {
+              backgroundColor: secondaryNavColor,
+              duration: 0.5,
+              ease: 'expo.out',
+            },
+            '<'
+          )
       }
     }
   })

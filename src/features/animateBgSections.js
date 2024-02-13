@@ -30,7 +30,7 @@ function animateBgSections() {
       trigger: triggerElement,
       start: 'top bottom',
       end: 'bottom top',
-      toggleActions: 'play none play none',
+      toggleActions: 'play none none none',
       onEnter: () => {
         lightBgTl.to(targetElementBg, {
           backgroundColor: varWhite,
@@ -76,7 +76,7 @@ function animateBgSections() {
       trigger: triggerElement,
       start: 'top bottom',
       end: 'bottom top',
-      toggleActions: 'play none play none',
+      toggleActions: 'play none none none',
       onEnter: () => {
         darkBgTl.to(targetElementBg, {
           backgroundColor: varBlack,

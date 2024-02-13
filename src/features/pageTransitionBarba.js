@@ -17,7 +17,7 @@ import customCursor from './customCursor'
 import initSwiper from './initSwiper'
 
 function pageTransitionBarba() {
-  const $sectionWrap = $('.section--hero')
+  const $sectionWrap = $('.section--detail-hero')
   const $pageTransitionOuterWrap = $('.page-transition')
   const $pageTransitionInnerWrap =
     $pageTransitionOuterWrap.find('.page-preload-wrap')
@@ -261,7 +261,7 @@ function pageTransitionBarba() {
           makeItemActive()
           initSwiper.initListSwiper().slideTo($('.active-flip-item').index(), 0)
           $(data.next.container).addClass('fixed')
-          flipImages($('.active-flip-item'), $('.section--hero'))
+          flipImages($('.active-flip-item'), $('.section--detail-hero'))
           return gsap.to(data.current.container, { opacity: 0, duration: 0.5 })
         },
         after(data) {
@@ -282,7 +282,10 @@ function pageTransitionBarba() {
           makeItemActive()
           initSwiper.initListSwiper()
           $(data.next.container).addClass('fixed')
-          flipImages($('.section--hero'), $('.active-flip-item .visual-wrap'))
+          flipImages(
+            $('.section--detail-hero'),
+            $('.active-flip-item .visual-wrap')
+          )
           return gsap.to(data.current.container, { opacity: 0, duration: 0.5 })
         },
         after(data) {

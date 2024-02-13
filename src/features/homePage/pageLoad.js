@@ -60,15 +60,16 @@ export default function pageLoad() {
       $heroBackgroundPosterImg,
       {
         clipPath: clipPathFull,
-        duration: 0.75,
-        ease: 'power2.inOut',
+        duration: 1.5,
+        stagger: 0.05,
+        ease: 'power3.inOut',
       },
-      '<+30%'
+      '<-25%'
     )
-    animateHeroTl.from(
+    animateHeroTl.to(
       $heroContent,
       {
-        y: '10rem',
+        y: '0rem',
         stagger: 0.1,
         duration: 1,
         ease: 'power2.out',

@@ -1,3 +1,5 @@
+let $ = window.$
+
 import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
@@ -6,18 +8,30 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function initSmoothScroll() {
   const lenis = new Lenis({
-    lerp: 0.075,
+    lerp: 0.1,
     wheelMultiplier: 0.7,
     gestureOrientation: 'vertical',
     normalizeWheel: false,
     smoothTouch: false,
   })
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+  requestAnimationFrame(raf)
 
-  lenis.on('scroll', ScrollTrigger.update)
-
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000)
+  $('[data-lenis-start]').on('click', function () {
+    lenis.start()
   })
-
-  gsap.ticker.lagSmoothing(0)
+  $('[data-lenis-stop]').on('click', function () {
+    lenis.stop()
+  })
+  $('[data-lenis-toggle]').on('click', function () {
+    $(this).toggleClass('stop-scroll')
+    if ($(this).hasClass('stop-scroll')) {
+      lenis.stop()
+    } else {
+      lenis.start()
+    }
+  })
 }
