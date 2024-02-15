@@ -17,6 +17,7 @@ import customCursor from './customCursor'
 import animateHero from './homePage/animateHero'
 import lenis from './initSmoothScroll'
 import initSwiper from './initSwiper'
+import { isDesktop } from './varbiables'
 
 function pageTransitionBarba() {
   const $sectionWrap = $('.section--detail-hero')
@@ -26,6 +27,8 @@ function pageTransitionBarba() {
   const $pageTransitionItems = $pageTransitionInnerWrap.children()
   const $pageTransitionLogo = $pageTransitionOuterWrap.find('.logo-svg')
   const $menuTrigger = $('.menu-trigger')
+
+  const matchMedia = gsap.matchMedia()
 
   function resetWebflow(data) {
     let parser = new DOMParser()
@@ -212,10 +215,12 @@ function pageTransitionBarba() {
 
   barba.hooks.after(() => {
     $(window).scrollTop(0)
-    const $customCrusor = $('.cb-cursor')
     initPage()
-    $customCrusor.remove()
-    customCursor()
+    matchMedia.add(isDesktop, () => {
+      const $customCrusor = $('.cb-cursor')
+      $customCrusor.remove()
+      customCursor()
+    })
   })
   barba.hooks.beforeLeave(() => {
     closeMenu()
@@ -326,7 +331,9 @@ function pageTransitionBarba() {
       },
       {
         once: () => {
-          customCursor()
+          matchMedia.add(isDesktop, () => {
+            customCursor()
+          })
           initPage()
           const allTriggers = ScrollTrigger.getAll()
           allTriggers.forEach((item) => {
