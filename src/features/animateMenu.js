@@ -3,7 +3,15 @@ let $ = window.$
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/src/ScrollTrigger'
 
-import { varBlack, varWhite, varTransparent } from './varbiables'
+import {
+  varBlack,
+  varWhite,
+  varTransparent,
+  isDesktop,
+  isTablet,
+  clipPathFull,
+  clipPathTop,
+} from './varbiables'
 gsap.registerPlugin(ScrollTrigger)
 
 function animateMenu() {
@@ -21,6 +29,9 @@ function animateMenu() {
   const allFlyoutNavigations = navigationFlyout.querySelectorAll(
     '.navigation_content-item-inner'
   )
+  const navigationContentWrap = navigationFlyout.querySelector(
+    '.navigation_content-wrap'
+  )
 
   // NAVBAR Items
   const navbarWrap = document.querySelector('.navbar-wrap')
@@ -36,6 +47,7 @@ function animateMenu() {
   const allNavbarItemsColor = [navBarLogo, allNavBarButtons, navBarMenuTrigger]
   const allNavbarItemsFill = [navBarMenuIconPaths]
 
+  const matchMedia = gsap.matchMedia()
   let mainNavColor
   let secondaryNavColor
 
@@ -63,7 +75,6 @@ function animateMenu() {
           {
             color: varBlack,
             duration: 0.25,
-            ease: 'expo.out',
           }
         )
         menuTlOpen.fromTo(
@@ -74,7 +85,6 @@ function animateMenu() {
           {
             fill: varBlack,
             duration: 0.25,
-            ease: 'expo.out',
           },
           '<'
         )
@@ -86,7 +96,6 @@ function animateMenu() {
           {
             backgroundColor: varBlack,
             duration: 0.25,
-            ease: 'expo.out',
           },
           '<'
         )
@@ -98,7 +107,6 @@ function animateMenu() {
           {
             backgroundColor: varWhite,
             duration: 0.25,
-            ease: 'expo.out',
           },
           '<'
         )
@@ -125,19 +133,35 @@ function animateMenu() {
           },
           '<'
         )
-        menuTlOpen.fromTo(
-          allFlyoutContentItems,
-          {
-            height: 0,
-          },
-          {
-            height: 'auto',
-            stagger: 0.05,
-            duration: 0.75,
-            ease: 'expo.inOut',
-          },
-          '<-0.25'
-        )
+        matchMedia.add(isTablet, () => {
+          menuTlOpen.fromTo(
+            navigationContentWrap,
+            {
+              clipPath: clipPathTop,
+            },
+            {
+              clipPath: clipPathFull,
+              duration: 1,
+              ease: 'expo.inOut',
+            },
+            '<-0.25'
+          )
+        })
+        matchMedia.add(isDesktop, () => {
+          menuTlOpen.fromTo(
+            allFlyoutContentItems,
+            {
+              height: 0,
+            },
+            {
+              height: 'auto',
+              stagger: 0.05,
+              duration: 0.75,
+              ease: 'expo.inOut',
+            },
+            '<-0.25'
+          )
+        })
         menuTlOpen.fromTo(
           allFlyoutNavigations,
           {
@@ -231,16 +255,29 @@ function animateMenu() {
           },
           '<'
         )
-        menuTlClose.to(
-          allFlyoutContentItems,
-          {
-            height: 0,
-            stagger: -0.05,
-            duration: 0.75,
-            ease: 'expo.inOut',
-          },
-          '<'
-        )
+        matchMedia.add(isDesktop, () => {
+          menuTlClose.to(
+            allFlyoutContentItems,
+            {
+              height: 0,
+              stagger: -0.05,
+              duration: 0.75,
+              ease: 'expo.inOut',
+            },
+            '<'
+          )
+        })
+        matchMedia.add(isTablet, () => {
+          menuTlClose.to(
+            navigationContentWrap,
+            {
+              clipPath: clipPathTop,
+              duration: 1.5,
+              ease: 'expo.inOut',
+            },
+            '<'
+          )
+        })
         menuTlClose.to(
           flyoutBlur,
           {
@@ -260,7 +297,6 @@ function animateMenu() {
             {
               color: mainNavColor,
               duration: 0.5,
-              ease: 'expo.out',
             },
             '<-0.15'
           )
@@ -269,7 +305,6 @@ function animateMenu() {
             {
               fill: mainNavColor,
               duration: 0.5,
-              ease: 'expo.out',
             },
             '<'
           )
@@ -278,7 +313,6 @@ function animateMenu() {
             {
               backgroundColor: mainNavColor,
               duration: 0.5,
-              ease: 'expo.out',
             },
             '<'
           )
@@ -287,7 +321,6 @@ function animateMenu() {
             {
               backgroundColor: secondaryNavColor,
               duration: 0.5,
-              ease: 'expo.out',
             },
             '<'
           )

@@ -9,6 +9,7 @@ export let isMobile = '(max-width: 478px)'
 export let reduceMotion = '(prefers-reduced-motion: reduce)'
 export let clipPathFull = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
 export let clipPathTop = 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)'
+export let clipPathBottom = 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)'
 
 function isFurtherScrolledThanHero(currentScrollPosition) {
   const heroSection = document.querySelector('.section--hero')
