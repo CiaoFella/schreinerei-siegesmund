@@ -14,6 +14,8 @@ import initHomePage from '../pages/homePage'
 import initListPage from '../pages/listPage'
 import initOverviewPage from '../pages/overviewPage'
 import customCursor from './customCursor'
+import animateHero from './homePage/animateHero'
+import lenis from './initSmoothScroll'
 import initSwiper from './initSwiper'
 
 function pageTransitionBarba() {
@@ -42,10 +44,12 @@ function pageTransitionBarba() {
   }
 
   function pageTransitionInAnimation() {
-    const transitionInTl = gsap.timeline()
-
-    $('html').addClass('animating')
-    $pageTransitionOuterWrap.addClass('is--active')
+    const transitionInTl = gsap.timeline({
+      onStart: () => {
+        $pageTransitionOuterWrap.addClass('is--active')
+        lenis.stop()
+      },
+    })
 
     return (
       transitionInTl.fromTo(
@@ -86,7 +90,7 @@ function pageTransitionBarba() {
       onComplete: () => {
         resetWebflow(transitionData)
         $pageTransitionOuterWrap.removeClass('is--active')
-        $('html').removeClass('animating')
+        lenis.start()
       },
     })
 
@@ -132,9 +136,6 @@ function pageTransitionBarba() {
     if (currentPage) {
       if (currentPage === 'home-page') {
         initHomePage()
-        setTimeout(() => {
-          ScrollTrigger.refresh()
-        }, 2000)
       } else if (currentPage === 'list-page') {
         initListPage()
       } else if (currentPage === 'detail-page') {
@@ -251,6 +252,31 @@ function pageTransitionBarba() {
         enter(data) {
           let transitionData = data
           pageTransitionOutAnimation(transitionData)
+        },
+      },
+      {
+        name: 'home-transition',
+        from: {
+          namespace: [
+            'about-page',
+            'list-page',
+            'detail-page',
+            'overview-page',
+          ],
+        },
+        to: {
+          namespace: ['home-page'],
+        },
+        async leave(data) {
+          await pageTransitionInAnimation()
+          $(data.current).hide()
+        },
+        enter(data) {
+          let transitionData = data
+          pageTransitionOutAnimation(transitionData)
+          setTimeout(() => {
+            animateHero.mainHeroAnimation()
+          }, 250)
         },
       },
       {

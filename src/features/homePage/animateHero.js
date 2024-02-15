@@ -3,12 +3,56 @@ let $ = window.$
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
+import lenis from '../initSmoothScroll'
+import { clipPathFull } from '../varbiables'
+
 gsap.registerPlugin(ScrollTrigger)
+
+const heroTextTl = gsap.timeline({ paused: true })
+const heroTl = gsap.timeline()
+
+function mainHeroAnimation() {
+  const $mainHero = $('.section--home-hero')
+  const $heroBackgroundImg = $mainHero.find('.hero-background-img')
+  const $heroBackgroundPosterImg = $mainHero.find('.hero-background-poster-img')
+  const $heroText = $mainHero.find('.hero-h1-wrap').children()
+  const $heroButton = $mainHero.find('.button-icon')
+  const $heroContent = [$heroText, $heroButton]
+  const animateHeroTl = gsap.timeline({
+    onStart: () => lenis.stop(),
+    onComplete: () => {
+      lenis.start()
+    },
+  })
+  animateHeroTl.to($heroBackgroundImg, {
+    clipPath: clipPathFull,
+    duration: 1,
+    ease: 'power3.inOut',
+  })
+  animateHeroTl.to(
+    $heroBackgroundPosterImg,
+    {
+      clipPath: clipPathFull,
+      duration: 1.25,
+      ease: 'power4.out',
+    },
+    '<+55%'
+  )
+  animateHeroTl.to(
+    $heroContent,
+    {
+      y: '0rem',
+      stagger: 0.1,
+      duration: 1,
+      ease: 'power3.out',
+    },
+    '>-25%'
+  )
+  animateHeroTl.to($('.hero-inner'), { visibility: 'visible', duration: 0 }, 0)
+}
 
 function animateHero() {
   const $heroSection = $('.section--home-hero')
-  const heroTextTl = gsap.timeline({})
-  const heroTl = gsap.timeline({})
   const $heroImageWrap = $heroSection.find('.hero-background-img')
   const $heroBackgroundPosterImg = $heroSection.find(
     '.hero-background-poster-img'
@@ -52,4 +96,4 @@ function animateHero() {
   return [heroTextTl, heroTl]
 }
 
-export default animateHero
+export default { animateHero, mainHeroAnimation }

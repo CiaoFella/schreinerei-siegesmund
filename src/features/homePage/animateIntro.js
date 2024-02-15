@@ -12,15 +12,14 @@ function animateIntro() {
   const $triggerElement = $introWrap
   const $images = $triggerElement.find('.img-wrap img')
   const $textitems = $triggerElement.find('h2')
-  const splitLines = new SplitType($textitems)
-  const $lastItem = $triggerElement.find('.intro-item.is--last-text')
+  const splitLines = new SplitType($textitems, { types: 'words,lines' })
   const textScrollTl = gsap.timeline({})
   const imageScrollTl = gsap.timeline({})
 
   ScrollTrigger.create({
     animation: textScrollTl,
-    trigger: $lastItem,
-    start: '-100% 50%',
+    trigger: $textitems,
+    start: 'top 75%',
     end: 'bottom 75%',
     toggleActions: 'play none none none',
   })

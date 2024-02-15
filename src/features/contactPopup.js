@@ -2,6 +2,8 @@ let $ = window.$
 
 import gsap from 'gsap'
 
+import lenis from './initSmoothScroll'
+
 export default function contactPopup() {
   const $allContactOpenLinks = $('[data-open=contact]')
   const $allContactCLoseLinks = $('[data-close=contact]')
@@ -64,9 +66,9 @@ export default function contactPopup() {
   })
 
   function openContactPopup() {
+    lenis.stop()
     openContactPopupTl
       .set($contactPopup, { display: 'flex' })
-      .set('body', { overflow: 'hidden' })
       .fromTo($contactPopup, { opacity: 0.1 }, { opacity: 1, duration: 0.1 })
       .fromTo(
         contactPopupInner,
@@ -98,6 +100,7 @@ export default function contactPopup() {
   }
 
   function closeContactPopup() {
+    lenis.start()
     closeContactPopupTl
       .to($contactPopupText, {
         y: '-5rem',
@@ -125,7 +128,6 @@ export default function contactPopup() {
         '<+0.15'
       )
       .to($contactPopup, { opacity: 0, duration: 0.5 }, '>-0.25')
-      .set('body', { overflow: 'initial' })
       .set($contactPopup, { display: 'none' })
   }
 

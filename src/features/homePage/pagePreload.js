@@ -2,7 +2,9 @@ let $ = window.$
 import gsap from 'gsap'
 import CustomEase from 'gsap/CustomEase'
 
+import lenis from '../initSmoothScroll'
 import { isDesktop, isTablet } from '../varbiables'
+import animateHero from './animateHero'
 import pageLoad from './pageLoad'
 
 gsap.registerPlugin(CustomEase)
@@ -42,10 +44,10 @@ export default function pagePreload() {
       onComplete: () =>
         matchMedia
           .add(isDesktop, () => {
-            pageLoad.pageLoad()
+            pageLoad()
           })
           .add(isTablet, () => {
-            pageLoad.mainHeroAnimation()
+            animateHero.mainHeroAnimation()
           }),
     })
     hidePreloadTl.to($allPreloadContent, {
@@ -61,7 +63,11 @@ export default function pagePreload() {
     )
     hidePreloadTl.to($preloadWrap, { display: 'none', duration: 0 })
   }
-  const preloadTl = gsap.timeline({ onComplete: endLoaderAnimation })
+
+  const preloadTl = gsap.timeline({
+    onStart: () => lenis.stop(),
+    onComplete: endLoaderAnimation,
+  })
 
   preloadTl.to(counter, {
     value: 100,

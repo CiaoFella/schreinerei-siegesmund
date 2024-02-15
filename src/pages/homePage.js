@@ -11,7 +11,7 @@ import syncCmsList from '../features/syncCmsList'
 export default function initHomePage() {
   return [
     animateNavbar(),
-    animateHero(),
+    animateHero.animateHero(),
     animateIntro(),
     animateTextScroll(),
     animateStrenghts(),
