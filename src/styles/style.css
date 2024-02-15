@@ -33,7 +33,7 @@ html.lenis {
 }
 
 .lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+  scroll-behavior: auto;
 }
 
 .lenis.lenis-smooth [data-lenis-prevent] {
@@ -41,7 +41,7 @@ html.lenis {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden !important;
+  overflow: hidden;
 }
 
 .lenis.lenis-scrolling iframe {
