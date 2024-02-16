@@ -7,20 +7,26 @@ import ScrollTrigger from 'gsap/src/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(CustomEase)
 
-function animateStrenghts() {
-  const $teaserSection = $('.section--strenghts-container')
-  const $firstSection = $teaserSection.find('.section--strenghts')
+function scrollGallery() {
+  const $teaserSection = $('.section--scroll-gallery-container')
+  const $firstSection = $teaserSection.find('.section--scroll-gallery')
 
-  const $teaserWrap = $teaserSection.find('.strenghts-wrap')
-  const $teaserInner = $teaserWrap.find('.strenghts-inner')
-  const $centerImages = $teaserWrap.find('.strenghts-img.is-middle')
-  const $allOtherImages = $teaserWrap.find('.strenghts-img:not(.is-middle)')
-  const $allColumns = $teaserWrap.find('.strenghts-column-inner')
-  const $centerColumns = $teaserWrap.find('.strenghts-column-inner.is-center')
-  const $reversedColumns = $teaserWrap.find(
-    '.strenghts-column-inner.is-reversed'
+  const $teaserWrap = $teaserSection.find('.scroll-gallery-wrap')
+  const $teaserInner = $teaserWrap.find('.scroll-gallery-inner')
+  const $centerImages = $teaserWrap.find('.scroll-gallery-img.is-middle')
+  const $allOtherImages = $teaserWrap.find(
+    '.scroll-gallery-img:not(.is-middle)'
   )
-  const $edgeColumns = $teaserWrap.find('.strenghts-column-inner.is-reversed')
+  const $allColumns = $teaserWrap.find('.scroll-gallery-column-inner')
+  const $centerColumns = $teaserWrap.find(
+    '.scroll-gallery-column-inner.is-center'
+  )
+  const $reversedColumns = $teaserWrap.find(
+    '.scroll-gallery-column-inner.is-reversed'
+  )
+  const $edgeColumns = $teaserWrap.find(
+    '.scroll-gallery-column-inner.is-reversed'
+  )
 
   const firstSectionTl = gsap.timeline({})
 
@@ -60,4 +66,4 @@ function animateStrenghts() {
   return [scrollTrigger1]
 }
 
-export default animateStrenghts
+export default scrollGallery

@@ -3,7 +3,7 @@ let $ = window.$
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/src/ScrollTrigger'
 
-import { varBlack, varTransparent, varWhite } from './varbiables'
+import { varBlack, varWhite, varTransparent } from '../utils/varbiables'
 gsap.registerPlugin(ScrollTrigger)
 
 const animateNavbar = () => {
@@ -24,8 +24,6 @@ const animateNavbar = () => {
   ]
   const $allNavbarItemsFill = $navBarMenuIconPaths
 
-  console.log($navBarMenuIconPaths)
-
   let mainNavColor = varBlack
   let secondaryNavColor = varTransparent
 
@@ -35,7 +33,6 @@ const animateNavbar = () => {
     navbarTl = gsap.timeline({})
 
     const navSectionData = $(navSection).data('nav')
-
     if (navSectionData === 'transparent') {
       mainNavColor = varWhite
       secondaryNavColor = varTransparent
@@ -46,6 +43,7 @@ const animateNavbar = () => {
       mainNavColor = varBlack
       secondaryNavColor = varWhite
     }
+
     ScrollTrigger.create({
       trigger: navSection,
       immediateRender: false,
@@ -54,7 +52,10 @@ const animateNavbar = () => {
       end: `bottom ${currentNavbarHeight}px`,
       toggleActions: 'restart none none reverse',
       onEnter: () => {
-        console.log(navSectionData)
+        $navbarWrap.data('nav', navSectionData)
+        $navbarWrap[0].setAttribute('data-nav', navSectionData)
+      },
+      onEnterBack: () => {
         $navbarWrap.data('nav', navSectionData)
         $navbarWrap[0].setAttribute('data-nav', navSectionData)
       },

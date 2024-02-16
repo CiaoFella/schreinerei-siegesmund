@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 import SplitType from 'split-type'
 
-import { varBlack, varGray } from './varbiables'
+import { varBlack, varGray } from '../utils/varbiables'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -46,8 +46,8 @@ function animateTextScroll() {
     ScrollTrigger.create({
       animation: textScrollTl,
       trigger: item,
-      start: 'top center',
-      end: 'bottom bottom',
+      start: 'top 25%',
+      end: 'bottom 75%',
       scrub: 0.5,
     })
   })

@@ -1,7 +1,7 @@
-import animateNavbar from '../features/animateNavbar'
-import animateTextScroll from '../features/animateTextScroll'
 import animateOverviewHero from '../features/overviewPage/animateOverviewHero'
-import syncCmsList from '../features/syncCmsList'
+import animateNavbar from '../features/shared/features/animateNavbar'
+import animateTextScroll from '../features/shared/features/animateTextScroll'
+import syncCmsList from '../features/shared/features/syncCmsList'
 
 export default function initOverviewPage() {
   return [

@@ -11,7 +11,7 @@ import {
   isTablet,
   clipPathFull,
   clipPathTop,
-} from './varbiables'
+} from '../../shared/utils/varbiables'
 gsap.registerPlugin(ScrollTrigger)
 
 function animateMenu() {
@@ -213,8 +213,6 @@ function animateMenu() {
           mainNavColor = varBlack
           secondaryNavColor = varWhite
         }
-        console.log(currentNavbarData)
-        console.log(currentNavbarData)
         const menuTlClose = gsap.timeline({
           onStart: () => {
             menuTrigger.style.pointerEvents = 'none'

@@ -3,27 +3,24 @@ let $ = window.$
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
-import lenis from '../initSmoothScroll'
-import { clipPathFull } from '../varbiables'
+import lenis from '../shared/utils/initSmoothScroll'
+import { clipPathFull } from '../shared/utils/varbiables'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const heroTextTl = gsap.timeline({ paused: true })
-const heroTl = gsap.timeline()
-
 function mainHeroAnimation() {
-  const $mainHero = $('.section--home-hero')
-  const $heroBackgroundImg = $mainHero.find('.hero-background-img')
-  const $heroBackgroundPosterImg = $mainHero.find('.hero-background-poster-img')
-  const $heroText = $mainHero.find('.hero-h1-wrap').children()
-  const $heroButton = $mainHero.find('.button-icon')
-  const $heroContent = [$heroText, $heroButton]
   const animateHeroTl = gsap.timeline({
     onStart: () => lenis.stop(),
     onComplete: () => {
       lenis.start()
     },
   })
+  const $mainHero = $('.section--home-hero')
+  const $heroBackgroundImg = $mainHero.find('.hero-background-img')
+  const $heroBackgroundPosterImg = $mainHero.find('.hero-background-poster-img')
+  const $heroText = $mainHero.find('.hero-h1-wrap').children()
+  const $heroButton = $mainHero.find('.button-icon')
+  const $heroContent = [$heroText, $heroButton]
   animateHeroTl.to($heroBackgroundImg, {
     clipPath: clipPathFull,
     duration: 1,
@@ -52,6 +49,8 @@ function mainHeroAnimation() {
 }
 
 function animateHero() {
+  const heroTextTl = gsap.timeline()
+  const heroTl = gsap.timeline()
   const $heroSection = $('.section--home-hero')
   const $heroImageWrap = $heroSection.find('.hero-background-img')
   const $heroBackgroundPosterImg = $heroSection.find(

@@ -2,7 +2,7 @@ let $ = window.$
 
 import gsap from 'gsap'
 
-import lenis from './initSmoothScroll'
+import lenis from '../utils/initSmoothScroll'
 
 export default function contactPopup() {
   const $allContactOpenLinks = $('[data-open=contact]')

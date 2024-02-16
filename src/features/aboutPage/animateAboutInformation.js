@@ -31,7 +31,8 @@ export default function animateAboutInformation() {
       informationItemTl.from(
         [$informationItemHeadline, splitType.lines, splitType.words],
         {
-          y: '15rem',
+          y: '10rem',
+          opacity: 0,
           duration: 2.5,
           stagger: 0.01,
           ease: 'expo.out',

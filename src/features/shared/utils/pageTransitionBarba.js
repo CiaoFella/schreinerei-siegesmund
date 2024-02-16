@@ -8,19 +8,20 @@ import ScrollTrigger from 'gsap/src/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(Flip)
 
-import initAboutPage from '../pages/aboutPage'
-import initDetailPage from '../pages/detailPage'
-import initHomePage from '../pages/homePage'
-import initListPage from '../pages/listPage'
-import initOverviewPage from '../pages/overviewPage'
-import customCursor from './customCursor'
-import animateHero from './homePage/animateHero'
+import initAboutPage from '../../../pages/aboutPage'
+import initDetailPage from '../../../pages/detailPage'
+import initHomePage from '../../../pages/homePage'
+import initListPage from '../../../pages/listPage'
+import initOverviewPage from '../../../pages/overviewPage'
+import customCursor from '../../customCursor/index'
+import animateHero from '../../homePage/animateHomeHero'
 import lenis from './initSmoothScroll'
 import initSwiper from './initSwiper'
+import setInitialState from './setInitialState'
 import { isDesktop } from './varbiables'
+import pagePreload from '../../homePage/pagePreload'
 
 function pageTransitionBarba() {
-  const $sectionWrap = $('.section--detail-hero')
   const $pageTransitionOuterWrap = $('.page-transition')
   const $pageTransitionInnerWrap =
     $pageTransitionOuterWrap.find('.page-preload-wrap')
@@ -98,11 +99,6 @@ function pageTransitionBarba() {
     })
 
     return (
-      transitionOutTl.from($sectionWrap, {
-        y: '50vh',
-        duration: 1,
-        ease: 'expo.inOut',
-      }),
       transitionOutTl.to(
         $pageTransitionItems,
         {
@@ -129,7 +125,7 @@ function pageTransitionBarba() {
           duration: 1,
           ease: 'expo.out',
         },
-        '<+0.3'
+        '<+0.6'
       )
     )
   }
@@ -149,6 +145,7 @@ function pageTransitionBarba() {
       } else if (currentPage === 'overview-page') {
         initOverviewPage()
       }
+      setInitialState()
     } else {
       return
     }
@@ -226,7 +223,12 @@ function pageTransitionBarba() {
     closeMenu()
     killPage()
   })
-
+  barba.hooks.once(() => {
+    const currentPage = $('[data-barba-namespace]').data('barbaNamespace')
+    if (currentPage === 'home-page') {
+      pagePreload()
+    }
+  })
   barba.init({
     preventRunning: true,
     transitions: [

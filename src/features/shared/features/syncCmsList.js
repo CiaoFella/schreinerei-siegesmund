@@ -3,6 +3,8 @@ let $ = window.$
 import gsap from 'gsap'
 
 function syncCmsList() {
+  let animateImageInTl
+
   // attribute value checker
   function attr(defaultVal, attrVal) {
     const defaultValType = typeof defaultVal
@@ -73,9 +75,8 @@ function syncCmsList() {
     })
 
     let activeImage
-
     function animateImageIn(activeImage) {
-      const animateImageInTl = gsap.timeline()
+      animateImageInTl = gsap.timeline()
       animateImageInTl.from(activeImage, {
         scale: 0.9,
         duration: 1,

@@ -2,10 +2,14 @@ let $ = window.$
 import gsap from 'gsap'
 import CustomEase from 'gsap/CustomEase'
 
-import lenis from '../initSmoothScroll'
-import { isDesktop, isTablet } from '../varbiables'
-import animateHero from './animateHero'
-import pageLoad from './pageLoad'
+import lenis from '../shared/utils/initSmoothScroll'
+import {
+  isDesktop,
+  isTablet,
+  clipPathFull,
+  clipPathTop,
+} from '../shared/utils/varbiables'
+import animateHero from './animateHomeHero'
 
 gsap.registerPlugin(CustomEase)
 
@@ -38,34 +42,82 @@ export default function pagePreload() {
 
   let matchMedia = gsap.matchMedia()
 
+  function pageLoad() {
+    const $pageLoadSection = $('.section--page-load')
+    if ($pageLoadSection) {
+      const $pageLoadImgWrap = $('.page-load-img-wrap')
+      if ($pageLoadSection) {
+        const pageLoadTl = gsap.timeline()
+        pageLoadTl.to($pageLoadImgWrap, {
+          clipPath: clipPathFull,
+          duration: 2,
+          stagger: 0.1,
+          ease: 'expo.out',
+        })
+        pageLoadTl.to(
+          $pageLoadImgWrap,
+          {
+            clipPath: clipPathTop,
+            duration: 1.5,
+            stagger: -0.05,
+            ease: 'expo.inOut',
+          },
+          '>-25%'
+        )
+        pageLoadTl.fromTo(
+          $pageLoadSection,
+          {
+            clipPath: clipPathFull,
+          },
+          {
+            clipPath: clipPathTop,
+            duration: 1.5,
+            ease: 'expo.inOut',
+          },
+          '>-55%'
+        )
+        pageLoadTl.call(() => animateHero.mainHeroAnimation(), null, '>-0.75')
+        pageLoadTl.to($pageLoadSection, { display: 'none', duration: 0 })
+      }
+    }
+  }
+
   function endLoaderAnimation() {
-    $(window).scrollTop(0)
-    const hidePreloadTl = gsap.timeline({
-      onComplete: () =>
-        matchMedia
-          .add(isDesktop, () => {
-            pageLoad()
-          })
-          .add(isTablet, () => {
-            animateHero.mainHeroAnimation()
-          }),
-    })
-    hidePreloadTl.to($allPreloadContent, {
-      y: '-10rem',
-      duration: 1,
-      stagger: 0.1,
-      ease: 'expo.inOut',
-    })
-    hidePreloadTl.to(
-      $allPreloadBars,
-      { height: 0, duration: 1, stagger: 0.05, ease: 'expo.inOut' },
-      '<+0.5'
-    )
-    hidePreloadTl.to($preloadWrap, { display: 'none', duration: 0 })
+    if ($preloadWrap) {
+      $(window).scrollTop(0)
+      const hidePreloadTl = gsap.timeline()
+      hidePreloadTl.to($allPreloadContent, {
+        y: '-10rem',
+        duration: 1,
+        stagger: 0.1,
+        ease: 'expo.inOut',
+      })
+      hidePreloadTl.to(
+        $allPreloadBars,
+        { height: 0, duration: 1, stagger: 0.05, ease: 'expo.inOut' },
+        '<+0.5'
+      )
+      hidePreloadTl.to($preloadWrap, { display: 'none', duration: 0 })
+      matchMedia
+        .add(isDesktop, () => {
+          hidePreloadTl.call(() => pageLoad())
+        })
+        .add(isTablet, () => {
+          hidePreloadTl.call(
+            () => animateHero.mainHeroAnimation(),
+            null,
+            '>-0.75s'
+          )
+        })
+    }
   }
 
   const preloadTl = gsap.timeline({
-    onStart: () => lenis.stop(),
+    onStart: () => {
+      if ($preloadWrap.length > 0) {
+        lenis.stop()
+      }
+    },
     onComplete: endLoaderAnimation,
   })
 
