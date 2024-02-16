@@ -1,9 +1,5 @@
 
 @media (min-width: 478px) {
-  .about-hero-wrap .about-hero-line .about-hero-img-wrap {
-    clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%);
-  }
-  
   .information-item:nth-child(odd) .information_img-wrap {
     clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
   }
@@ -11,6 +7,10 @@
   .information-item:nth-child(even) .information_img-wrap {
     clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
   }
+}
+
+.about-hero-wrap .about-hero-line .about-hero-img-wrap {
+  clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%);
 }
 
 .section--about-hero h1 .line, .section--about-hero h1 .word {
