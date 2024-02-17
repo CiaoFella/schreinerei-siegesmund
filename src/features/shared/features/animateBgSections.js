@@ -3,83 +3,80 @@ let $ = window.$
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
-import { varBlack, varWhite } from '../utils/varbiables'
+import { varBlack, varWhite, varTransparent } from '../utils/varbiables'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function animateBgSections() {
-  const backgroundTl = gsap.timeline({
-    defaults: {
-      duration: 0.25,
-    },
-  })
-  const $allLightBg = $('.service-row:nth-child(odd)')
-  $allLightBg.each(function () {
-    const triggerElement = $(this)
-    const targetElementBg = $('body')
-    const targetElementText = $(this).find('*')
-    const targetWrappingSection = $(this).closest('div[class*=section--]')
-    const targetAlterText = targetWrappingSection.find('.is--changing-text')
+  const backgroundTl = gsap.timeline({ defaults: { overwrite: 'auto' } })
+  let backgroundColor
+  let textColor
+  let previousBackgroundColor
+  let previousTextColor
+
+  const $allBgSections = $('[data-bg]')
+  $allBgSections.each((index, section) => {
+    const body = $('body')
+    const sectionBackgroundData = $(section).data('bg')
+    const closestSection = $(section).closest('div[class*=section--]')
+    const targetText = closestSection.find(
+      `[data-bg-text=${sectionBackgroundData}]`
+    )
+
+    if (sectionBackgroundData === 'dark') {
+      previousBackgroundColor = varTransparent
+      previousTextColor = varBlack
+      backgroundColor = varBlack
+      textColor = varWhite
+    }
+
     ScrollTrigger.create({
       animation: backgroundTl,
-      trigger: triggerElement,
-      start: 'top bottom',
-      end: 'bottom top',
-      toggleActions: 'play none none none',
+      trigger: section,
+      start: 'top 50%',
       onEnter: () => {
-        backgroundTl.to(targetElementBg, {
-          backgroundColor: varWhite,
-        })
-        if (targetAlterText.length > 0) {
-          backgroundTl.to(targetAlterText, { color: varBlack })
-        } else {
-          backgroundTl.to(targetElementText, { color: varBlack })
-        }
+        backgroundTl
+          .to(body, {
+            backgroundColor: backgroundColor,
+            duration: 0.25,
+          })
+          .to(targetText, {
+            color: textColor,
+            duration: 0.25,
+          })
       },
       onEnterBack: () => {
-        backgroundTl.to(targetElementBg, {
-          backgroundColor: varWhite,
-        })
-        if (targetAlterText.length > 0) {
-          backgroundTl.to(targetAlterText, { color: varBlack })
-        } else {
-          backgroundTl.to(targetElementText, { color: varBlack })
-        }
+        backgroundTl
+          .to(body, {
+            backgroundColor: backgroundColor,
+            duration: 0.25,
+          })
+          .to(targetText, {
+            color: textColor,
+            duration: 0.25,
+          })
       },
-    })
-  })
-  const $allDarkBg = $('.service-row:nth-child(even)')
-  $allDarkBg.each(function () {
-    const triggerElement = $(this)
-    const targetElementBg = $('body')
-    const targetElementText = $(this).find('*')
-    const targetWrappingSection = $(this).closest('div[class*=section--]')
-    const targetAlterText = targetWrappingSection.find('.is--changing-text')
-    ScrollTrigger.create({
-      animation: backgroundTl,
-      trigger: triggerElement,
-      start: 'top bottom',
-      end: 'bottom top',
-      toggleActions: 'play none none none',
-      onEnter: () => {
-        backgroundTl.to(targetElementBg, {
-          backgroundColor: varBlack,
-        })
-        if (targetAlterText.length > 0) {
-          backgroundTl.to(targetAlterText, { color: varWhite })
-        } else {
-          backgroundTl.to(targetElementText, { color: varWhite })
-        }
+      onLeaveBack: () => {
+        backgroundTl
+          .to(body, {
+            backgroundColor: previousBackgroundColor,
+            duration: 0.25,
+          })
+          .to(targetText, {
+            color: previousTextColor,
+            duration: 0.25,
+          })
       },
-      onEnterBack: () => {
-        backgroundTl.to(targetElementBg, {
-          backgroundColor: varBlack,
-        })
-        if (targetAlterText.length > 0) {
-          backgroundTl.to(targetAlterText, { color: varWhite })
-        } else {
-          backgroundTl.to(targetElementText, { color: varWhite })
-        }
+      onLeave: () => {
+        backgroundTl
+          .to(body, {
+            backgroundColor: previousBackgroundColor,
+            duration: 0.25,
+          })
+          .to(targetText, {
+            color: previousTextColor,
+            duration: 0.25,
+          })
       },
     })
   })
