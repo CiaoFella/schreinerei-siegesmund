@@ -12,7 +12,9 @@ function mainHeroAnimation() {
   const animateHeroTl = gsap.timeline({
     onStart: () => lenis.stop(),
     onComplete: () => {
-      lenis.start()
+      setTimeout(() => {
+        lenis.start()
+      }, 100)
     },
   })
   const $mainHero = $('.section--home-hero')
