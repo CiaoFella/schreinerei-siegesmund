@@ -14,11 +14,8 @@ function animateTextScroll() {
   const $allScrollHeadlines = $('.section--scroll-headline')
 
   $allScrollHeadlines.each(function (index, item) {
-    const singleHeadlineTl = gsap.timeline()
-    headlineScrollTl.add(singleHeadlineTl)
-
     ScrollTrigger.create({
-      animation: singleHeadlineTl,
+      animation: headlineScrollTl,
       trigger: item,
       start: 'top top',
       end: 'bottom 75%',
@@ -27,7 +24,7 @@ function animateTextScroll() {
 
     const $allTextLines = $(item).find('.is--text-line')
     const splitWords = new SplitType($allTextLines, { types: 'words' })
-    singleHeadlineTl.from(splitWords.words, {
+    headlineScrollTl.from(splitWords.words, {
       y: '10rem',
       stagger: 0.05,
       duration: 1.25,
