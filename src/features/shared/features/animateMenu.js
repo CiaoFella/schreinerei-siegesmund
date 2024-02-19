@@ -50,7 +50,7 @@ function animateMenu() {
           },
         })
         menuTlOpen.call(() => {
-          $navbarWrap.toggleClass('background')
+          $navbarWrap.addClass('background')
         })
         menuTlOpen.fromTo(
           flyoutBlur,
@@ -221,7 +221,7 @@ function animateMenu() {
           duration: 0,
         })
         menuTlClose.call(() => {
-          $navbarWrap.toggleClass('background')
+          $navbarWrap.removeClass('background')
         })
       }
     }

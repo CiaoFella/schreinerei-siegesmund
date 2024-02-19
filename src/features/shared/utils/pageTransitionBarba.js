@@ -220,6 +220,12 @@ function pageTransitionBarba() {
       $customCrusor.remove()
       customCursor()
     })
+    const allScrollTrigger = ScrollTrigger.getAll()
+    setTimeout(() => {
+      allScrollTrigger.forEach((trigger) => {
+        trigger.refresh()
+      })
+    }, 1000)
   })
   barba.hooks.beforeLeave(() => {
     closeMenu()
