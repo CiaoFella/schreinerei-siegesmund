@@ -11,6 +11,68 @@
   opacity: 1;
 }
 
+.navbar-wrap, .navbar-wrap .logo-svg, 
+.navbar-wrap .menu-trigger, 
+.navbar-wrap .button-icon, 
+.navbar-wrap .button-icon .button-underline, 
+.navbar-wrap .menu-icon svg path {
+  transition: all 0.25s ease;
+}
+
+/* NAVBAR TRANSPARENT */
+
+.navbar-wrap.transparent .logo-svg, .navbar-wrap.transparent .menu-trigger, .navbar-wrap.transparent .button-icon {
+  color: #f8f8f8;
+}
+
+.navbar-wrap.transparent .button-icon .button-underline {
+  background-color: #f8f8f8;
+}
+
+.navbar-wrap.transparent .menu-icon svg path {
+  fill: #f8f8f8;
+}
+
+.navbar-wrap.transparent {
+  background-color: transparent;
+}
+
+/* NAVBAR DARK TRANSPARENT */
+
+.navbar-wrap.dark-transparent .logo-svg, .navbar-wrap.dark-transparent .menu-trigger, .navbar-wrap.dark-transparent .button-icon {
+  color: #1c1c1c;
+}
+
+.navbar-wrap.dark-transparent .button-icon .button-underline {
+  background-color: #1c1c1c;
+}
+
+.navbar-wrap.dark-transparent .menu-icon svg path {
+  fill: #1c1c1c;
+}
+
+.navbar-wrap.dark-transparent {
+  background-color: transparent;
+}
+
+/* NAVBAR BACKGROUND */
+
+.navbar-wrap.background .logo-svg, .navbar-wrap.background .menu-trigger, .navbar-wrap.background .button-icon {
+  color: #1c1c1c;
+}
+
+.navbar-wrap.background .button-icon .button-underline {
+  background-color: #1c1c1c;
+}
+
+.navbar-wrap.background .menu-icon svg path {
+  fill: #1c1c1c;
+}
+
+.navbar-wrap.background {
+  background-color: #f8f8f8;
+}
+
 /* PAGE TRANSITION */
 
 html.animating, .animating body {
@@ -27,7 +89,30 @@ html.animating, .animating body {
   opacity: 1;
 }
 
+/* BACKGROUND SECTION */
+
+.section-wrapper {
+  transition: background-color 0.5s ease;
+}
+
+.dark-bg {
+  background-color: #1c1c1c;
+}
+
+.light-bg {
+  background-color: transparent;
+}
+
+.light-bg-text {
+  color: #1c1c1c;
+}
+
+.dark-bg-text {
+  color: #f8f8f8;
+}
+
 /* Smooth scroll */
+
 html.lenis {
   height: auto;
 }

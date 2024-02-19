@@ -25,6 +25,7 @@ function pageTransitionBarba() {
   const $pageTransitionOuterWrap = $('.page-transition')
   const $pageTransitionInnerWrap =
     $pageTransitionOuterWrap.find('.page-preload-wrap')
+  const $navbarWrap = $('.navbar-wrap')
   const $pageTransitionItems = $pageTransitionInnerWrap.children()
   const $pageTransitionLogo = $pageTransitionOuterWrap.find('.logo-svg')
   const $menuTrigger = $('.menu-trigger')
@@ -212,6 +213,7 @@ function pageTransitionBarba() {
 
   barba.hooks.after(() => {
     $(window).scrollTop(0)
+    $navbarWrap.attr('class', 'navbar-wrap')
     initPage()
     matchMedia.add(isDesktop, () => {
       const $customCrusor = $('.cb-cursor')

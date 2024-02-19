@@ -4,9 +4,6 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/src/ScrollTrigger'
 
 import {
-  varBlack,
-  varWhite,
-  varTransparent,
   isDesktop,
   isTablet,
   clipPathFull,
@@ -16,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 function animateMenu() {
   const menuTrigger = document.querySelector('.menu-trigger')
+  const $navbarWrap = $('.navbar-wrap')
   const navigationOuterWrap = document.querySelector('.navbar-content-wrap')
   const navigationFlyout = document.querySelector('.navigation-flyout')
   const allFlyoutContentItems = navigationFlyout.querySelectorAll(
@@ -33,23 +31,7 @@ function animateMenu() {
     '.navigation_content-wrap'
   )
 
-  // NAVBAR Items
-  const navbarWrap = document.querySelector('.navbar-wrap')
-  const navBarMenuIconPaths = navbarWrap.querySelectorAll('.menu-icon svg path')
-  const navBarLogo = navbarWrap.querySelector('.logo-svg')
-  const navBarMenuTrigger = navbarWrap.querySelectorAll(
-    '.menu-trigger.is--secondary'
-  )
-  const allNavBarButtons = navbarWrap.querySelectorAll('.button-icon')
-  const allNavBarButtonsUnderline = navbarWrap.querySelectorAll(
-    '.button-icon .button-underline'
-  )
-  const allNavbarItemsColor = [navBarLogo, allNavBarButtons, navBarMenuTrigger]
-  const allNavbarItemsFill = [navBarMenuIconPaths]
-
   const matchMedia = gsap.matchMedia()
-  let mainNavColor
-  let secondaryNavColor
 
   menuTrigger.addEventListener('click', () => {
     menuTrigger.classList.toggle('is-active')
@@ -67,49 +49,9 @@ function animateMenu() {
             $(menuTrigger).removeClass('is--animating')
           },
         })
-        menuTlOpen.fromTo(
-          allNavbarItemsColor,
-          {
-            color: varWhite,
-          },
-          {
-            color: varBlack,
-            duration: 0.25,
-          }
-        )
-        menuTlOpen.fromTo(
-          allNavbarItemsFill,
-          {
-            fill: varWhite,
-          },
-          {
-            fill: varBlack,
-            duration: 0.25,
-          },
-          '<'
-        )
-        menuTlOpen.fromTo(
-          allNavBarButtonsUnderline,
-          {
-            backgroundColor: varWhite,
-          },
-          {
-            backgroundColor: varBlack,
-            duration: 0.25,
-          },
-          '<'
-        )
-        menuTlOpen.fromTo(
-          navbarWrap,
-          {
-            backgroundColor: varTransparent,
-          },
-          {
-            backgroundColor: varWhite,
-            duration: 0.25,
-          },
-          '<'
-        )
+        menuTlOpen.call(() => {
+          $navbarWrap.toggleClass('background')
+        })
         menuTlOpen.fromTo(
           flyoutBlur,
           {
@@ -202,17 +144,6 @@ function animateMenu() {
           '<'
         )
       } else {
-        const currentNavbarData = $(navbarWrap).data('nav')
-        if (currentNavbarData === 'transparent') {
-          mainNavColor = varWhite
-          secondaryNavColor = varTransparent
-        } else if (currentNavbarData === 'dark-transparent') {
-          mainNavColor = varBlack
-          secondaryNavColor = varTransparent
-        } else if (currentNavbarData === 'background') {
-          mainNavColor = varBlack
-          secondaryNavColor = varWhite
-        }
         const menuTlClose = gsap.timeline({
           onStart: () => {
             menuTrigger.style.pointerEvents = 'none'
@@ -289,39 +220,9 @@ function animateMenu() {
           autoAlpha: 0,
           duration: 0,
         })
-        menuTlClose
-          .to(
-            allNavbarItemsColor,
-            {
-              color: mainNavColor,
-              duration: 0.5,
-            },
-            '<-0.15'
-          )
-          .to(
-            allNavbarItemsFill,
-            {
-              fill: mainNavColor,
-              duration: 0.5,
-            },
-            '<'
-          )
-          .to(
-            allNavBarButtonsUnderline,
-            {
-              backgroundColor: mainNavColor,
-              duration: 0.5,
-            },
-            '<'
-          )
-          .to(
-            navbarWrap,
-            {
-              backgroundColor: secondaryNavColor,
-              duration: 0.5,
-            },
-            '<'
-          )
+        menuTlClose.call(() => {
+          $navbarWrap.toggleClass('background')
+        })
       }
     }
   })
