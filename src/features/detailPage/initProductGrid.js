@@ -9,12 +9,13 @@ export default function initProductGrid() {
   const $productGrid = $('.product-grid-grid')
   const $allItems = $productGrid.find('.product-grid-item')
   let activeItem = $allItems[0]
+  if ($allItems.length > 9) {
+    $(activeItem).addClass('is--big')
 
-  $(activeItem).addClass('is--big')
-
-  $allItems.each((index, item) => {
-    $(item).on('click', () => changeGrid(item))
-  })
+    $allItems.each((index, item) => {
+      $(item).on('click', () => changeGrid(item))
+    })
+  }
 
   function changeGrid(el) {
     if (el === activeItem) return

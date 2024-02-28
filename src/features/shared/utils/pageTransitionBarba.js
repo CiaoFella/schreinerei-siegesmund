@@ -226,6 +226,7 @@ function pageTransitionBarba() {
         trigger.refresh()
       })
     }, 1000)
+    console.log('made with ❤️ by Julian (www.julianfella.de)')
   })
   barba.hooks.beforeLeave(() => {
     closeMenu()
