@@ -2,10 +2,20 @@
   transform: translateY(15rem);
 }
 
-.product-grid-grid {
-  grid-template-areas:
-  "img-1 img-1 . . ."
-  "img-1 img-1 . . . "
+@media (max-width: 767px) {
+  .product-grid-grid {
+    grid-template-areas:
+    "img-1 img-1 ."
+    "img-1 img-1 ."
+  }
+}
+
+@media (min-width: 767px) {
+  .product-grid-grid {
+    grid-template-areas:
+    "img-1 img-1 . . ."
+    "img-1 img-1 . . . "
+  }
 }
 
 .product-grid-grid .product-grid-item.is--big  {
